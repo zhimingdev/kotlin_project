@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "com.test.myapplication"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation('com.roughike:bottom-bar:2.3.1') {
+        exclude group: 'com.android.support'
+    }
+    //noinspection GradleCompatible
+    implementation 'com.android.support:cardview-v7:28.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:28.1.0'
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:3.5.0"
+    implementation 'com.blankj:utilcodex:1.26.0'
+    implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+    implementation "com.squareup.okhttp3:logging-interceptor:3.5.0"
+    implementation "com.github.bumptech.glide:glide:3.8.0"
+    implementation "com.robinhood.ticker:ticker:1.2.2"
+}
