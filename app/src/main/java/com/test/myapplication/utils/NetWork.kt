@@ -11,27 +11,38 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class NetWork {
+    var client : OkHttpClient? = null
     companion object {
         var modk_url = "http://mock-api.com/mnEDaYgJ.mock/"
-        var wan_url = "http://www.wanandroid.com/"
+        var wan_url = "https://www.wanandroid.com/"
     }
 
     fun getRetrofit(baseUrl: String): Retrofit {
         var logInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-
-        var clien = OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(logInterceptor)
-                //自定义拦截器用于日志输出
-                .build()
+        if (baseUrl.contains("wanandroid")) {
+            client = OkHttpClient.Builder()
+                    .addInterceptor(logInterceptor)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .addInterceptor(AddCookiesInterceptor())
+                    //自定义拦截器用于日志输出
+                    .build()
+        }else{
+            client = OkHttpClient.Builder()
+                    .addInterceptor(logInterceptor)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    //自定义拦截器用于日志输出
+                    .build()
+        }
 
         val retrofit = Retrofit.Builder().baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 //格式转换
-                .client(clien)
+                .client(client)
                 .build()
         return retrofit
     }

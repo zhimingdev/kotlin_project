@@ -19,10 +19,10 @@ abstract class ApiBaseResponse<T>(private val activity: FragmentActivity) : Obse
     }
 
     override fun onNext(t: BaseResponse<T>) {
-        if (t.code == 200) {
-            onSuccess(t.data)
-        } else {
-            onCodeError(t)
+        when {
+            t.code == 200 -> onSuccess(t.data)
+            t.errorCode == 0 -> onSuccess(t.data)
+            else -> onCodeError(t)
         }
     }
 

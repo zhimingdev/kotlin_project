@@ -12,5 +12,7 @@ class BaseResponse<T> {
     var code: Int = 0
     var msg: String? = null
     var data: T? = null
+    var errorCode : Int = 0
+    var errorMsg : String? = null
 
 }

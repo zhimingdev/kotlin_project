@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import org.greenrobot.eventbus.EventBus
 
 abstract class BaseFragment : Fragment() {
 
@@ -13,7 +14,7 @@ abstract class BaseFragment : Fragment() {
         init()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    public override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return initView()
     }
 
