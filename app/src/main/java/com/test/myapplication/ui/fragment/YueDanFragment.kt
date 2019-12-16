@@ -80,17 +80,15 @@ class YueDanFragment : BaseFragment() {
      */
     fun clearCache() {
         RxUtil.switchThread(object : RxUtil.OnEventListener {
-            override fun onEvent(event: Any?): Any {
+            override fun onEvent(event: Any?) {
                 Glide.get(context).clearDiskCache()
                 CleanUtils.cleanInternalCache()
                 CleanUtils.cleanExternalCache()
-                return event!!
             }
         }, object : RxUtil.OnEventListener {
-            override fun onEvent(event: Any?): Any {
+            override fun onEvent(event: Any?) {
                 tv_cache.text = "0 B"
                 ToastUtils.showShort("缓存清除成功")
-                return event!!
             }
         })
     }

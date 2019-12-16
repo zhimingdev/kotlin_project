@@ -32,11 +32,6 @@ object RxUtil {
     fun switchThread(ioListener: OnEventListener, mainListener: OnEventListener) {
         Observable.create(ObservableOnSubscribe<Any> { emitter ->
             var o = ioListener.onEvent(null)
-
-            if (ObjectUtils.isEmpty(o)) {
-                o = Any()
-            }
-
             emitter.onNext(o)
         })
             .subscribeOn(Schedulers.io())
@@ -169,6 +164,6 @@ object RxUtil {
     }
 
     interface OnEventListener {
-        fun onEvent(event: Any?): Any
+        fun onEvent(event: Any?)
     }
 }
