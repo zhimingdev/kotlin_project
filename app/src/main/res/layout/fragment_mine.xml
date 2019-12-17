@@ -258,7 +258,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/rl_web"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -280,7 +280,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/iv_go"
-                android:text="点我有惊喜"
+                android:text="我的客服"
                 android:textColor="@android:color/black"
                 android:textSize="16dp"/>
 

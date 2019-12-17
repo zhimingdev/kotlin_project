@@ -11,6 +11,7 @@ import com.robinhood.ticker.TickerUtils
 import com.test.myapplication.R
 import com.test.myapplication.api.Api
 import com.test.myapplication.base.BaseFragment
+import com.test.myapplication.constans.UrlConstans
 import com.test.myapplication.module.*
 import com.test.myapplication.ui.activity.LoginActivity
 import com.test.myapplication.ui.activity.WebActivity
@@ -29,7 +30,7 @@ class YueDanFragment : BaseFragment() {
 
     private var cacheDialog: UsualDialogger? = null
     private var logoutdialog: UsualDialogger? = null
-    var weburl : String? = null
+    var weburl : String = UrlConstans.kefu_url
     val network by lazy { NetWork() }
 
     override fun initView(): View {
@@ -41,7 +42,6 @@ class YueDanFragment : BaseFragment() {
 
     override fun initDate() {
         showName()
-        getMineData()
         tv_version.text = "V " + AppUtils.getAppVersionCode()
         tv_cache.setCharacterList(TickerUtils.getDefaultListForUSCurrency())
         tv_cache.text = "0 B"
@@ -54,7 +54,6 @@ class YueDanFragment : BaseFragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : ApiBaseResponse<MineModule>(activity!!){
                     override fun onSuccess(t: MineModule?) {
-                        weburl = t!!.imageurl
                     }
 
                     override fun onCodeError(tBaseReponse: BaseResponse<*>) {

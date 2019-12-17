@@ -38,6 +38,7 @@ public class HomeFragment extends BaseFragment {
     private String customurl;
     private TextView textView;
     private UpdateDialog dialogger;
+    private NetWork netWork;
 
     @NotNull
     @Override
@@ -60,7 +61,7 @@ public class HomeFragment extends BaseFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        NetWork netWork = new NetWork();
+        netWork = new NetWork();
         netWork.getApi(Api.class).getUpdate()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -82,28 +83,32 @@ public class HomeFragment extends BaseFragment {
                         }
                     }
                 });
+        loadData();
+    }
+
+    private void loadData() {
         netWork.getApi(Api.class).getBanner()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new ApiBaseResponse<List<BannerBean>>(getActivity()) {
-                @Override
-                public void onFail(@NotNull ApiError e) {}
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ApiBaseResponse<List<BannerBean>>(getActivity()) {
+                    @Override
+                    public void onFail(@NotNull ApiError e) {}
 
-                @Override
-                public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {}
+                    @Override
+                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {}
 
-                @Override
-                public void onSuccess(@Nullable List<BannerBean> bannerBeans) {
-                    list = bannerBeans;
-                    bannerView.setPages(list, new MZHolderCreator<BannerViewHolder>() {
-                        @Override
-                        public BannerViewHolder createViewHolder() {
-                            return new BannerViewHolder();
-                        }
-                    });
-                    bannerView.start();
-                }
-            });
+                    @Override
+                    public void onSuccess(@Nullable List<BannerBean> bannerBeans) {
+                        list = bannerBeans;
+                        bannerView.setPages(list, new MZHolderCreator<BannerViewHolder>() {
+                            @Override
+                            public BannerViewHolder createViewHolder() {
+                                return new BannerViewHolder();
+                            }
+                        });
+                        bannerView.start();
+                    }
+                });
         netWork.getApi(Api.class).getHomeData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -135,6 +140,9 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     public void onClick(View view) {
                         dialogger.dismiss();
+                        Intent intent = new Intent(getContext(),WebActivity.class);
+                        intent.putExtra("url",url);
+                        startActivity(intent);
                     }
                 })
         .setOnConfirmClickListener("更新",new UpdateDialog.onConfirmClickListener(){
@@ -183,6 +191,14 @@ public class HomeFragment extends BaseFragment {
         public void onBind(Context context, int position, BannerBean data) {
             // 数据绑定
             Picasso.with(context).load(data.getImageurl()).into(mImageView);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            loadData();
         }
     }
 }
