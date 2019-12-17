@@ -8,7 +8,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "com.test.myapplication"
+        applicationId "com.test.sandev"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -16,32 +16,32 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs {// 自动化打包配置
-        release {// 线上环境
-            keyAlias 'key0'
-            keyPassword '123456'
-            storeFile file('../kotlin_mine.jks')
-            storePassword '123456'
-        }
-        debug {// 开发环境
-            keyAlias 'key0'
-            keyPassword '123456'
-            storeFile file('../kotlin_mine.jks')
-            storePassword '123456'
-        }
-    }
+//    signingConfigs {// 自动化打包配置
+//        release {// 线上环境
+//            keyAlias 'key0'
+//            keyPassword '123456'
+//            storeFile file('../kotlin_mine.jks')
+//            storePassword '123456'
+//        }
+//        debug {// 开发环境
+//            keyAlias 'key0'
+//            keyPassword '123456'
+//            storeFile file('../kotlin_mine.jks')
+//            storePassword '123456'
+//        }
+//    }
 
     buildTypes {
         release {
             minifyEnabled true
             zipAlignEnabled true
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
             zipAlignEnabled false
-            signingConfig signingConfigs.debug
+//            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

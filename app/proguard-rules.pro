@@ -54,5 +54,5 @@
 # Gson
 -keep class com.google.gson.stream.** { *; }
 -keepattributes EnclosingMethod
--keep class com.test.myapplication.module.**{ *; }
--keep class com.test.myapplication.ui.** {*;}
+-keep class com.test.sandev.module.**{ *; }
+-keep class com.test.sandev.ui.** {*;}

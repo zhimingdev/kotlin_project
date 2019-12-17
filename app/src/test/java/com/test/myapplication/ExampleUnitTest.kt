@@ -1,4 +1,4 @@
-package com.test.myapplication
+package com.test.sandev
 
 import org.junit.Test
 
