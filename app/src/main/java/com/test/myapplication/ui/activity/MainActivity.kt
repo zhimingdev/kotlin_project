@@ -1,24 +1,26 @@
 package com.test.myapplication.ui.activity
-import android.content.Intent
 import androidx.fragment.app.Fragment
-import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.test.myapplication.base.BaseActivity
 import com.test.myapplication.utils.FragmentUtils
 import com.test.myapplication.R
-import com.test.myapplication.module.MessageEvent
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import kotlin.system.exitProcess
+import android.widget.Toast
+import android.view.KeyEvent
+import com.test.myapplication.ui.fragment.VBangFragment
+import com.xiao.nicevideoplayer.NiceVideoPlayerManager
+
 
 class MainActivity : BaseActivity(){
     //需要显示的fragment
     var showfragment : Fragment? = null
     //当前显示的fragment
     var currentfragment :Fragment? = null
+    var lasttime : Long = 0
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_main
+        return com.test.myapplication.R.layout.activity_main
     }
 
     override fun initData() {
@@ -34,10 +36,37 @@ class MainActivity : BaseActivity(){
             if (showfragment!!.isAdded) {
                 transaction.show(FragmentUtils.instance.getFragment(it))
             }else{
-                transaction.add(R.id.container,showfragment!!)
+                transaction.add(com.test.myapplication.R.id.container,showfragment!!)
             }
             transaction.commit()
             currentfragment = showfragment
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        val secondTime = System.currentTimeMillis()
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (currentfragment is VBangFragment) {
+                if (NiceVideoPlayerManager.instance().onBackPressd()) {
+                    return true
+                }else {
+                    if (secondTime - lasttime < 2000) {
+                        exitProcess(0)
+                    } else {
+                        ToastUtils.showShort("再按一次返回键退出")
+                        lasttime = System.currentTimeMillis()
+                    }
+                }
+            }else {
+                if (secondTime - lasttime < 2000) {
+                    exitProcess(0)
+                } else {
+                    ToastUtils.showShort("再按一次返回键退出")
+                    lasttime = System.currentTimeMillis()
+                }
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

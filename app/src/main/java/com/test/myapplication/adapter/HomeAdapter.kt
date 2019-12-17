@@ -14,7 +14,7 @@ import com.test.myapplication.module.HomeBean
 import com.test.myapplication.R
 import com.test.myapplication.ui.activity.WebActivity
 
-class HomeAdapter(private val context : Context, private val list :List<HomeBean.DatasBean>) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter(private val context : Context?, private val list :List<HomeBean.DatasBean>?) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context.let {
@@ -24,18 +24,18 @@ class HomeAdapter(private val context : Context, private val list :List<HomeBean
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list!!.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.time.text = list[position].time
-        holder.title.text = list[position].title
-        Picasso.with(context).load(list[position].imageurl).into(holder.image)
-        holder.number.text = list[position].count
+        holder.time.text = list!![position].time
+        holder.title.text = list!![position].title
+        Picasso.with(context).load(list!![position].imageurl).into(holder.image)
+        holder.number.text = list!![position].count
         holder.rl.setOnClickListener {
             var intent = Intent(context, WebActivity::class.java)
-            intent.putExtra("url",list[position].descriptionurl)
-            context.startActivity(intent)
+            intent.putExtra("url",list!![position].descriptionurl)
+            context!!.startActivity(intent)
         }
     }
 

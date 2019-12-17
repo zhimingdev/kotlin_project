@@ -7,6 +7,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="AppTheme.splas" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@mipmap/default_splash_bg</item>
+    </style>
+
     <style name="AppTheme.FullScreen" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>

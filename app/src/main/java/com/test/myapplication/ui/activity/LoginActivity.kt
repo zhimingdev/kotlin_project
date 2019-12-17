@@ -93,6 +93,7 @@ class LoginActivity : BaseActivity(), TextWatcher {
             bt_go.setTextColor(resources.getColor(R.color.white))
         }else{
             bt_go.isEnabled = false
+            bt_go.background = resources.getDrawable(R.drawable.bt_shape)
             bt_go.setTextColor(Color.parseColor("#d3d3d3"))
         }
     }

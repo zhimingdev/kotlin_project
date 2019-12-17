@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+
 import com.test.myapplication.R;
 
 public class UsualDialogger extends Dialog {
@@ -47,7 +49,7 @@ public class UsualDialogger extends Dialog {
         initView();
     }
 
-    public static Builder Builder(Context context) {
+    public static Builder Builder(FragmentActivity context) {
         return new Builder(context);
     }
 
