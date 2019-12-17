@@ -14,13 +14,12 @@ import com.test.myapplication.R;
 import com.test.myapplication.adapter.HomeAdapter;
 import com.test.myapplication.api.Api;
 import com.test.myapplication.base.BaseFragment;
-import com.test.myapplication.module.ApiError;
-import com.test.myapplication.module.BannerBean;
-import com.test.myapplication.module.BaseResponse;
-import com.test.myapplication.module.HomeBean;
+import com.test.myapplication.module.*;
 import com.test.myapplication.ui.activity.WebActivity;
 import com.test.myapplication.utils.ApiBaseResponse;
 import com.test.myapplication.utils.NetWork;
+import com.test.myapplication.utils.UpdateDialog;
+import com.test.myapplication.utils.UsualDialogger;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
@@ -38,6 +37,7 @@ public class HomeFragment extends BaseFragment {
     HomeAdapter homeAdapter;
     private String customurl;
     private TextView textView;
+    private UpdateDialog dialogger;
 
     @NotNull
     @Override
@@ -61,19 +61,36 @@ public class HomeFragment extends BaseFragment {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         NetWork netWork = new NetWork();
+        netWork.getApi(Api.class).getUpdate()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ApiBaseResponse<UpdateModule>(getActivity()) {
+                    @Override
+                    public void onFail(@NotNull ApiError e) {
+
+                    }
+
+                    @Override
+                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@Nullable UpdateModule updateModule) {
+                        if (updateModule.getIsupdate()) {
+                            showdialog(updateModule.getWeburl());
+                        }
+                    }
+                });
         netWork.getApi(Api.class).getBanner()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new ApiBaseResponse<List<BannerBean>>(getActivity()) {
                 @Override
-                public void onFail(@NotNull ApiError e) {
-
-                }
+                public void onFail(@NotNull ApiError e) {}
 
                 @Override
-                public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {
-
-                }
+                public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {}
 
                 @Override
                 public void onSuccess(@Nullable List<BannerBean> bannerBeans) {
@@ -110,6 +127,25 @@ public class HomeFragment extends BaseFragment {
                         recyclerView.setAdapter(homeAdapter);
                     }
                 });
+    }
+
+    public void showdialog (final String url) {
+        dialogger = UpdateDialog.Builder(getActivity())
+                .setOnCancelClickListener("取消",new UpdateDialog.onCancelClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        dialogger.dismiss();
+                    }
+                })
+        .setOnConfirmClickListener("更新",new UpdateDialog.onConfirmClickListener(){
+            @Override
+            public void onClick(View view) {
+                dialogger.dismiss();
+                Intent intent = new Intent(getContext(),WebActivity.class);
+                intent.putExtra("url",url);
+                startActivity(intent);
+            }
+        }).build().shown();
     }
 
     @Override

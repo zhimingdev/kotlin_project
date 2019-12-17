@@ -79,6 +79,8 @@ class WebActivity : BaseActivity() {
             if (webView?.canGoBack()) {
                 webView.goBack()
                 return@OnKeyListener true
+            }else {
+                finish()
             }
         }
         false

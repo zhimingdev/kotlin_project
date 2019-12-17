@@ -4,18 +4,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
-
 import com.test.myapplication.R;
 
-public class UsualDialogger extends Dialog {
+public class UpdateDialog extends Dialog {
 
     private final String TITLE;
     private final String MESSAGE;
@@ -33,8 +30,8 @@ public class UsualDialogger extends Dialog {
         void onClick(View view);
     }
 
-    private UsualDialogger(@NonNull Context context, String title, String message,int resid, String confirmText, String cancelText,
-                           onConfirmClickListener onConfirmClickListener, onCancelClickListener onCancelClickListener) {
+    private UpdateDialog(@NonNull Context context, String title, String message, int resid, String confirmText, String cancelText,
+                         onConfirmClickListener onConfirmClickListener, onCancelClickListener onCancelClickListener) {
         super(context, R.style.MyUsualDialog);
         this.TITLE = title;
         this.MESSAGE = message;
@@ -48,7 +45,7 @@ public class UsualDialogger extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.usual_dialog);
+        setContentView(R.layout.update_dialog);
         setCanceledOnTouchOutside(false);
         initView();
     }
@@ -100,7 +97,7 @@ public class UsualDialogger extends Dialog {
         });
     }
 
-    public UsualDialogger shown() {
+    public UpdateDialog shown() {
         show();
         return this;
     }
@@ -146,8 +143,8 @@ public class UsualDialogger extends Dialog {
             return this;
         }
 
-        public UsualDialogger build() {
-            return new UsualDialogger(mContext, mTitle, mMessage, resid,mConfirmText, mCancelText,
+        public UpdateDialog build() {
+            return new UpdateDialog(mContext, mTitle, mMessage, resid,mConfirmText, mCancelText,
                     mOnConfirmClickListener, mOnCcancelClickListener);
         }
     }

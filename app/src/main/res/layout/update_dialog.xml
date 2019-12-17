@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#01000000">
+
+    <LinearLayout
+            android:id="@+id/ll_bg"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+        <ImageView
+                android:id="@+id/iv_top"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/lib_update_app_top_bg"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/update_dialog_shape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <!--这个地方需要设置可以滚动-->
+            <ScrollView
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:scrollbars="vertical">
+                <TextView
+                        android:id="@+id/tv_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:lineSpacingExtra="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:text="1.发现了新版本"/>
+            </ScrollView>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#E4E4E4"/>
+
+            <LinearLayout
+                    android:background="@drawable/update_dialog_shape"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                <Button
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        tools:text="No"
+                        android:textColor="#7D7D7D"
+                        android:textSize="18sp"
+                        tools:ignore="RtlHardcoded"/>
+
+                <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="#E4E4E4"/>
+
+                <Button
+                        android:id="@+id/btn_confirm"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        tools:text="Yes"
+                        android:textColor="#38ADFF"
+                        android:textSize="18sp"
+                        tools:ignore="RtlHardcoded"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
