@@ -14,12 +14,12 @@ import com.test.sandev.module.HomeBean
 import com.test.sandev.R
 import com.test.sandev.ui.activity.WebActivity
 
-class HomeAdapter(private val context : Context?, private val list :List<HomeBean.DatasBean>?) : RecyclerView.Adapter<com.test.sandev.adapter.HomeAdapter.ViewHolder>() {
+class HomeAdapter(private val context : Context?, private val list :List<HomeBean.DatasBean>?) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.test.sandev.adapter.HomeAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context.let {
             var itemview = LayoutInflater.from(context!!).inflate(R.layout.home_item,parent,false)
-            return com.test.sandev.adapter.HomeAdapter.ViewHolder(itemview)
+            return ViewHolder(itemview)
         }
     }
 
@@ -27,7 +27,7 @@ class HomeAdapter(private val context : Context?, private val list :List<HomeBea
         return list!!.size
     }
 
-    override fun onBindViewHolder(holder: com.test.sandev.adapter.HomeAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.time.text = list!![position].time
         holder.title.text = list!![position].title
         Picasso.with(context).load(list!![position].imageurl).into(holder.image)

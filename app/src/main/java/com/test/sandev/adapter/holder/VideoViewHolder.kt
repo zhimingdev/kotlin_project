@@ -40,7 +40,6 @@ class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         mController.setLenght(video.length!!)
         Glide.with(itemView.context)
                 .load(video.imageurl)
-                .placeholder(R.drawable.img_default)
                 .crossFade()
                 .into(mController.imageView())
         mVideoPlayer.setUp(video.videourl, null)

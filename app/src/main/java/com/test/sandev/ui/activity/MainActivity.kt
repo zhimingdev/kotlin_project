@@ -47,6 +47,7 @@ class MainActivity : BaseActivity(){
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (currentfragment is VBangFragment) {
                 if (NiceVideoPlayerManager.instance().onBackPressd()) {
+                    NiceVideoPlayerManager.instance().releaseNiceVideoPlayer()
                     return true
                 }else {
                     if (secondTime - lasttime < 2000) {

@@ -9,8 +9,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.test.sandev.base.BaseActivity
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import com.test.sandev.R
+import com.xiao.nicevideoplayer.LogUtil
 import kotlinx.android.synthetic.main.activity_web.*
 
 
@@ -39,16 +41,16 @@ class WebActivity : BaseActivity() {
 
     private var webviewclient = object :WebViewClient(){
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            try {
+            return try {
                 if (url!!.startsWith("http:") || url.startsWith("https:")) {
                     view!!.loadUrl(url)
                 } else {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     startActivity(intent)
                 }
-                return true
+                true
             } catch (e: Exception) {
-                return false
+                false
             }
 
         }
@@ -70,6 +72,15 @@ class WebActivity : BaseActivity() {
             }
 
         }
+
+        override fun getDefaultVideoPoster(): Bitmap? {
+            return try{
+                BitmapFactory.decodeResource(applicationContext.resources,
+                        R.mipmap.ic_launcher)
+            }catch(e : Exception ){
+                super.getDefaultVideoPoster()
+            }
+        }
     }
 
     private val OnKeyEvent = View.OnKeyListener { v, keyCode, event ->
@@ -86,15 +97,12 @@ class WebActivity : BaseActivity() {
         false
     }
 
-    private val click  = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            if (web.canGoBack()){
-                web.goBack()
-            }else{
-                finish()
-            }
+    private val click  = View.OnClickListener {
+        if (web.canGoBack()){
+            web.goBack()
+        }else{
+            finish()
         }
-
     }
 
     override fun onDestroy() {

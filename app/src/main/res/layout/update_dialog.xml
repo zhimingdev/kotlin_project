@@ -7,7 +7,7 @@
 
     <LinearLayout
             android:id="@+id/ll_bg"
-            android:layout_width="300dp"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical">
@@ -15,7 +15,7 @@
         <ImageView
                 android:id="@+id/iv_top"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="130dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/lib_update_app_top_bg"/>
 
@@ -31,15 +31,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:scrollbars="vertical">
                 <TextView
                         android:id="@+id/tv_message"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:lineSpacingExtra="5dp"
                         android:textSize="16sp"
                         android:textColor="@android:color/black"
@@ -54,7 +54,7 @@
             <LinearLayout
                     android:background="@drawable/update_dialog_shape"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:orientation="horizontal">
 
                 <Button
