@@ -8,7 +8,7 @@ class JifenModule {
     var userId : Int? = 0
     var username : String? = null
     //收藏
-    var collect : String? = (0..100).random().toString()
+    var collect : String? = null
     //赞
-    var starts : String? = (0..50).random().toString()
+    var starts : String? = null
 }

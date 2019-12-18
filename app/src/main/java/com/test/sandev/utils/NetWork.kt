@@ -1,8 +1,5 @@
 package com.test.sandev.utils
 
-import android.app.PendingIntent.getService
-import com.test.sandev.api.Api
-import com.test.sandev.utils.NetWork.Companion.wan_url
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

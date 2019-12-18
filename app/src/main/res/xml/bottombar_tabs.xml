@@ -9,6 +9,10 @@
         icon="@mipmap/ic_bottom_mv_unselect"
         title="视频" />
     <tab
+        id="@+id/tab_kefu"
+        icon="@mipmap/tab_kefu"
+        title="客服" />
+    <tab
         id="@+id/tab_yuedan"
         icon="@mipmap/ic_bottom_mvlist_unselect"
         title="我的" />

@@ -35,4 +35,8 @@ interface Api {
 
     @GET("v1/home/update")
     fun getUpdate() : Observable<BaseResponse<UpdateModule>>
+
+
+    @GET("v1/mine/isShow")
+    fun getPack() : Observable<BaseResponse<PackModule>>
 }

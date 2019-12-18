@@ -29,16 +29,16 @@ class CustomDialog private constructor(context: Context, private val TITLE: Stri
         val tvMessage = findViewById<TextView>(R.id.tv_message)
 
         if (!TextUtils.isEmpty(TITLE)) {
-            tvTitle.setText(TITLE)
+            tvTitle.text = TITLE
         }
         if (!TextUtils.isEmpty(MESSAGE)) {
-            tvMessage.setText(MESSAGE)
+            tvMessage.text = MESSAGE
         }
         if (!TextUtils.isEmpty(CONFIRMTEXT)) {
-            btnConfirm.setText(CONFIRMTEXT)
+            btnConfirm.text = CONFIRMTEXT
         }
         if (!TextUtils.isEmpty(CANCELTEXT)) {
-            btnCancel.setText(CANCELTEXT)
+            btnCancel.text = CANCELTEXT
         }
 
         btnConfirm.setOnClickListener(View.OnClickListener { view ->

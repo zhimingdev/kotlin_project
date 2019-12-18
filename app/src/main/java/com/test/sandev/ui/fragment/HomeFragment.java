@@ -6,6 +6,7 @@ import android.net.Network;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.test.sandev.adapter.HomeAdapter;
 import com.test.sandev.api.Api;
 import com.test.sandev.base.BaseFragment;
 import com.test.sandev.module.*;
+import com.test.sandev.ui.activity.KeFuActivty;
 import com.test.sandev.ui.activity.WebActivity;
 import com.test.sandev.utils.ApiBaseResponse;
 import com.test.sandev.utils.NetWork;
@@ -47,6 +49,7 @@ public class HomeFragment extends BaseFragment {
     private TextView textView;
     private UpdateDialog dialogger;
     private NetWork netWork;
+    private LinearLayout linearLayout;
 
     @NotNull
     @Override
@@ -55,6 +58,7 @@ public class HomeFragment extends BaseFragment {
         bannerView = view.findViewById(R.id.banner);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         textView = (TextView) view.findViewById(R.id.tv_url);
+        linearLayout = (LinearLayout) view.findViewById(R.id.ll_go_kefu);
         return view;
     }
 
@@ -70,27 +74,27 @@ public class HomeFragment extends BaseFragment {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         netWork = new NetWork();
-        netWork.getApi(Api.class).getUpdate()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ApiBaseResponse<UpdateModule>(getActivity()) {
-                    @Override
-                    public void onFail(@NotNull ApiError e) {
-
-                    }
-
-                    @Override
-                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(@Nullable UpdateModule updateModule) {
-                        if (updateModule.getIsupdate()) {
-                            showdialog(updateModule.getWeburl());
-                        }
-                    }
-                });
+//        netWork.getApi(Api.class).getUpdate()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new ApiBaseResponse<UpdateModule>(getActivity()) {
+//                    @Override
+//                    public void onFail(@NotNull ApiError e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(@Nullable UpdateModule updateModule) {
+//                        if (updateModule.getIsupdate()) {
+//                            showdialog(updateModule.getWeburl());
+//                        }
+//                    }
+//                });
         loadData();
     }
 
@@ -183,6 +187,14 @@ public class HomeFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), KeFuActivty.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public static class BannerViewHolder implements MZViewHolder<BannerBean> {

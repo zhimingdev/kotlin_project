@@ -14,6 +14,7 @@ import com.test.sandev.base.BaseFragment
 import com.test.sandev.constans.UrlConstans
 import com.test.sandev.module.*
 import com.test.sandev.ui.activity.LoginActivity
+import com.test.sandev.ui.activity.SecurpacActivity
 import com.test.sandev.ui.activity.WebActivity
 import com.test.sandev.utils.ApiBaseResponse
 import com.test.sandev.utils.NetWork
@@ -42,10 +43,32 @@ class YueDanFragment : BaseFragment() {
 
     override fun initDate() {
         showName()
-        tv_version.text = "V " + AppUtils.getAppVersionCode()
+        getPackInfo()
+        tv_version.text = "V 1.0.0"
         tv_cache.setCharacterList(TickerUtils.getDefaultListForUSCurrency())
         tv_cache.text = "0 B"
         tv_cache.text = FileUtils.getSize(Utils.getApp().cacheDir)
+        inv.setNumber("1")
+    }
+
+    private fun getPackInfo() {
+        network.getApi(Api::class.java).getPack()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : ApiBaseResponse<PackModule>(activity!!){
+                    override fun onSuccess(t: PackModule?) {
+                        if (t!!.flag!!) {
+                            rl_my_jifen.visibility = View.VISIBLE
+                        }
+                    }
+
+                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+                    }
+
+                    override fun onFail(e: ApiError) {
+                    }
+
+                })
     }
 
     private fun getMineData() {
@@ -72,13 +95,12 @@ class YueDanFragment : BaseFragment() {
             ll_login.isEnabled = false
             tv_logout.visibility = View.VISIBLE
             iv_head.setImageResource(R.mipmap.ic_head)
-            ll_jifen.visibility = View.VISIBLE
-            getJifen()
+            tv_collect.text = (0..100).random().toString()
+            tv_starts.text = (0..50).random().toString()
         } else {
             tv_uaername.text = "立即登录"
             ll_login.isEnabled = true
             tv_logout.visibility = View.GONE
-            ll_jifen.visibility = View.GONE
             tv_collect.text = "0"
             tv_starts.text = "0"
             iv_head.setImageResource(R.mipmap.img_mine)
@@ -96,8 +118,6 @@ class YueDanFragment : BaseFragment() {
                 .subscribe(object :ApiBaseResponse<JifenModule>(activity!!) {
                     override fun onSuccess(t: JifenModule?) {
                         tv_count.text = t!!.coinCount.toString()
-                        tv_collect.text = t!!.collect
-                        tv_starts.text = t!!.starts
                     }
 
                     override fun onCodeError(tBaseReponse: BaseResponse<*>) {
@@ -157,6 +177,11 @@ class YueDanFragment : BaseFragment() {
         rl_web.setOnClickListener {
             var intent = Intent(context,WebActivity::class.java)
             intent.putExtra("url",weburl)
+            startActivity(intent)
+        }
+
+        rl_my_jifen.setOnClickListener {
+            var intent = Intent(activity, SecurpacActivity::class.java)
             startActivity(intent)
         }
     }

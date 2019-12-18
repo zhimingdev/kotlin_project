@@ -3,10 +3,6 @@ package com.test.sandev.ui.activity
 import android.graphics.Bitmap
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import com.test.sandev.base.BaseActivity
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -14,6 +10,13 @@ import android.net.Uri
 import com.test.sandev.R
 import com.xiao.nicevideoplayer.LogUtil
 import kotlinx.android.synthetic.main.activity_web.*
+import android.os.Build.VERSION_CODES.LOLLIPOP
+import android.os.Build.VERSION.SDK_INT
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.R.attr.name
+import android.os.Build
+import android.webkit.*
 
 
 class WebActivity : BaseActivity() {
@@ -22,6 +25,11 @@ class WebActivity : BaseActivity() {
     }
 
     override fun initData() {
+        if (SDK_INT >= LOLLIPOP) {
+            val cookieManager = CookieManager.getInstance()
+            cookieManager.setAcceptThirdPartyCookies(web, true)
+        }
+
         var weburl :String = intent.getStringExtra("url")
         var websetting = web.settings
         websetting.javaScriptEnabled = true
