@@ -5,13 +5,21 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.*
 import com.test.sandev.R
 import com.test.sandev.base.BaseFragment
 import com.test.sandev.constans.UrlConstans
+import com.test.sandev.ui.activity.WebActivity
+import com.test.sandev.utils.LollipopFixedWebView
+import kotlinx.android.synthetic.main.activity_web.*
 import kotlinx.android.synthetic.main.fragment_kefu.*
+import android.R.attr.name
+import android.os.Bundle
+import android.view.ViewTreeObserver
+
 
 class KeFuFragment : BaseFragment() {
     override fun initView(): View {
@@ -43,7 +51,10 @@ class KeFuFragment : BaseFragment() {
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
             return try {
                 if (url!!.startsWith("http:") || url.startsWith("https:")) {
-                    view!!.loadUrl(url)
+                    val intent = Intent(activity,WebActivity::class.java)
+                    intent.putExtra("url",url)
+                    startActivity(intent)
+//                    view!!.loadUrl(url)
                 } else {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     startActivity(intent)
@@ -70,6 +81,14 @@ class KeFuFragment : BaseFragment() {
             }catch(e : Exception ){
                 super.getDefaultVideoPoster()
             }
+        }
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (hidden) {
+           if (webview.canGoBack()) {
+               webview.goBack()
+           }
         }
     }
 }

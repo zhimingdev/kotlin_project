@@ -1,4 +1,5 @@
 package com.test.sandev.ui.activity
+
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ToastUtils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,6 +13,7 @@ import com.test.sandev.base.BaseActivity
 import com.test.sandev.module.ApiError
 import com.test.sandev.module.BaseResponse
 import com.test.sandev.module.PackModule
+import com.test.sandev.ui.fragment.KeFuFragment
 import com.test.sandev.ui.fragment.VBangFragment
 import com.test.sandev.utils.ApiBaseResponse
 import com.test.sandev.utils.FragmentUtils
@@ -21,12 +23,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class MainActivity : BaseActivity(){
+class MainActivity : BaseActivity() {
     //需要显示的fragment
-    var showfragment : Fragment? = null
+    var showfragment: Fragment? = null
     //当前显示的fragment
-    var currentfragment :Fragment? = null
-    var lasttime : Long = 0
+    var currentfragment: Fragment? = null
+    var lasttime: Long = 0
     val network by lazy { NetWork() }
 
     override fun getLayoutId(): Int {
@@ -39,7 +41,7 @@ class MainActivity : BaseActivity(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : ApiBaseResponse<PackModule>(this) {
                     override fun onSuccess(t: PackModule?) {
-                        println("======"+t!!.flag)
+                        println("======" + t!!.flag)
                         if (t!!.flag!!) {
                             bottomBar.getTabWithId(R.id.tab_yuedan).badgeHidesWhenActive = false
                             bottomBar.getTabWithId(R.id.tab_yuedan).setBadgeCount(1)
@@ -56,17 +58,16 @@ class MainActivity : BaseActivity(){
     }
 
     override fun initLisenter() {
-        bottomBar.setOnTabSelectListener{
+        bottomBar.setOnTabSelectListener {
             var transaction = supportFragmentManager.beginTransaction()
-             showfragment = FragmentUtils.instance.getFragment(it)
-
+            showfragment = FragmentUtils.instance.getFragment(it)
             if (currentfragment != null && showfragment != currentfragment) {
                 transaction.hide(currentfragment!!)
             }
             if (showfragment!!.isAdded) {
                 transaction.show(FragmentUtils.instance.getFragment(it))
-            }else{
-                transaction.add(R.id.container,showfragment!!)
+            } else {
+                transaction.add(R.id.container, showfragment!!)
             }
             transaction.commit()
             currentfragment = showfragment
@@ -79,7 +80,7 @@ class MainActivity : BaseActivity(){
             if (currentfragment is VBangFragment) {
                 if (NiceVideoPlayerManager.instance().onBackPressd()) {
                     return true
-                }else {
+                } else {
                     if (secondTime - lasttime < 2000) {
                         exitProcess(0)
                     } else {
@@ -87,7 +88,7 @@ class MainActivity : BaseActivity(){
                         lasttime = System.currentTimeMillis()
                     }
                 }
-            }else {
+            } else {
                 if (secondTime - lasttime < 2000) {
                     exitProcess(0)
                 } else {

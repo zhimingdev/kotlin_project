@@ -68,7 +68,7 @@
                 android:text="拼命加载中..."/>
         </LinearLayout>
 
-        <WebView
+        <com.test.sandev.utils.LollipopFixedWebView
             android:id="@+id/web"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
