@@ -27,8 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustPan"/>
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".ui.activity.WebActivity"/>
         <activity android:name=".ui.activity.LoginActivity"
                   android:theme="@style/AppTheme.FullScreen"/>

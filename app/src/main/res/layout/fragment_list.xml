@@ -9,10 +9,6 @@
               android:fillViewport="true"
               android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -21,33 +17,31 @@
             <com.zhouwei.mzbanner.MZBannerView
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="150dp"
                     app:open_mz_mode="true"
                     app:canLoop="true"
                     app:indicatorAlign="center"
                     app:indicatorPaddingLeft="10dp"/>
 
-            <TextView
-                    android:visibility="gone"
-                    android:id="@+id/tv_url"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:text="点我试一下"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/colorPrimary"/>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                app:tabBackground="@color/white"
+                app:tabIndicatorColor="@color/red"
+                app:tabSelectedTextColor="@color/red"
+                app:tabTextColor="@android:color/darker_gray"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
+                app:tabMode="fixed">
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="6dp"
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/home_item"/>
+            </com.google.android.material.tabs.TabLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/ll_go_kefu"

@@ -8,8 +8,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.test.sandev.R;
 import com.test.sandev.adapter.HomeAdapter;
@@ -35,6 +41,8 @@ import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -43,22 +51,22 @@ public class HomeFragment extends BaseFragment {
 
     private MZBannerView bannerView;
     private List<BannerBean> list;
-    private RecyclerView recyclerView;
-    HomeAdapter homeAdapter;
-    private String customurl;
-    private TextView textView;
     private UpdateDialog dialogger;
     private NetWork netWork;
     private LinearLayout linearLayout;
+    private TabLayout tabLayout;
+    private List<String> items = new ArrayList<>();
+    private CommonFragment mHomeFragment;
+    private CommonFragment mUploadFragment;
+    private FragmentTransaction transaction;
 
     @NotNull
     @Override
     public View initView() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_list,null);
         bannerView = view.findViewById(R.id.banner);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        textView = (TextView) view.findViewById(R.id.tv_url);
         linearLayout = (LinearLayout) view.findViewById(R.id.ll_go_kefu);
+        tabLayout = (TabLayout) view.findViewById(R.id.tab);
         return view;
     }
 
@@ -70,33 +78,36 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initDate() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        items.clear();
+        items.add("足球");
+        items.add("广场");
         netWork = new NetWork();
-//        netWork.getApi(Api.class).getUpdate()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new ApiBaseResponse<UpdateModule>(getActivity()) {
-//                    @Override
-//                    public void onFail(@NotNull ApiError e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(@Nullable UpdateModule updateModule) {
-//                        if (updateModule.getIsupdate()) {
-//                            showdialog(updateModule.getWeburl());
-//                        }
-//                    }
-//                });
         loadData();
+        for (String item : items) {
+            tabLayout.addTab(tabLayout.newTab().setText(item));
+        }
+        initFragmentReplace();
     }
+
+    private void initFragmentReplace() {
+        // 获取到fragment碎片管理器
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        // 开启事务
+        transaction = manager.beginTransaction();
+
+        // 获取到fragment的对象
+        mHomeFragment = CommonFragment.Companion.getInstanca(0);
+        mUploadFragment = CommonFragment.Companion.getInstanca(1);
+
+        // 设置要显示的fragment 和 影藏的fragment
+        transaction.add(R.id.fl_main, mHomeFragment, "home").show(mHomeFragment);
+        transaction.add(R.id.fl_main, mUploadFragment, "upload").hide(mUploadFragment);
+
+        // 提交事务
+        transaction.commit();
+
+    }
+
 
     private void loadData() {
         netWork.getApi(Api.class).getBanner()
@@ -119,29 +130,6 @@ public class HomeFragment extends BaseFragment {
                             }
                         });
                         bannerView.start();
-                    }
-                });
-        netWork.getApi(Api.class).getHomeData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ApiBaseResponse<HomeBean>(getActivity()) {
-                    @Override
-                    public void onFail(@NotNull ApiError e) {
-
-                    }
-
-                    @Override
-                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(@Nullable HomeBean homeBean) {
-                        customurl = homeBean.getCustomurl();
-                        if (homeAdapter == null) {
-                            homeAdapter = new HomeAdapter(getContext(),homeBean.getDatas());
-                        }
-                        recyclerView.setAdapter(homeAdapter);
                     }
                 });
     }
@@ -179,14 +167,6 @@ public class HomeFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),WebActivity.class);
-                intent.putExtra("url",customurl);
-                startActivity(intent);
-            }
-        });
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,6 +175,30 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.show(mHomeFragment).hide(mUploadFragment).commit();
+                }else {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.show(mUploadFragment).hide(mHomeFragment).commit();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     public static class BannerViewHolder implements MZViewHolder<BannerBean> {
@@ -211,14 +215,6 @@ public class HomeFragment extends BaseFragment {
         public void onBind(Context context, int position, BannerBean data) {
             // 数据绑定
             Picasso.with(context).load(data.getImageurl()).into(mImageView);
-        }
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            loadData();
         }
     }
 }

@@ -32,6 +32,7 @@ class HomeAdapter(private val context : Context?, private val list :List<HomeBea
         holder.title.text = list!![position].title
         Picasso.with(context).load(list!![position].imageurl).into(holder.image)
         holder.number.text = list!![position].count
+        holder.tags.text = list!![position].tags
         holder.rl.setOnClickListener {
             var intent = Intent(context, WebActivity::class.java)
             intent.putExtra("url",list!![position].descriptionurl)
@@ -44,6 +45,7 @@ class HomeAdapter(private val context : Context?, private val list :List<HomeBea
         var title :TextView = itemview.findViewById(R.id.tv_title)
         var image : ImageView = itemview.findViewById(R.id.iv_home_item)
         var number :TextView = itemview.findViewById(R.id.tv_number)
+        var tags :TextView = itemview.findViewById(R.id.tv_tag)
         var rl :RelativeLayout = itemview.findViewById(R.id.rl_item)
     }
 }

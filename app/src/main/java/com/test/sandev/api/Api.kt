@@ -39,4 +39,7 @@ interface Api {
 
     @GET("v1/mine/isShow")
     fun getPack() : Observable<BaseResponse<PackModule>>
+
+    @GET("v1/home/getSquare")
+    fun getSqData() : Observable<BaseResponse<List<SqModule>>>
 }

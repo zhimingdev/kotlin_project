@@ -23,5 +23,6 @@ class HomeBean {
         var time: String? = null
         var imageurl: String? = null
         var count :String? = null
+        var tags : String? = null
     }
 }
