@@ -37,7 +37,7 @@ class CommonFragment(private var number : Int) : BaseFragment() {
         return view
     }
 
-    override fun initDate() {
+    override fun initSandevDate() {
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         recyclerView!!.layoutManager = linearLayoutManager
@@ -46,24 +46,43 @@ class CommonFragment(private var number : Int) : BaseFragment() {
 
     private fun loadData() {
         if (number == 0) {
-            netWork.getApi(Api::class.java).getHomeData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : ApiBaseResponse<HomeBean>(activity!!) {
-                    override fun onSuccess(t: HomeBean?) {
-                        if (homeAdapter == null) {
-                            homeAdapter = HomeAdapter(context,t!!.datas)
+//            netWork.getApi(Api::class.java).getHomeData()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(object : ApiBaseResponse<HomeBean>(activity!!) {
+//                    override fun onSuccess(t: HomeBean?) {
+//                        if (homeAdapter == null) {
+//                            homeAdapter = HomeAdapter(context,t!!.datas)
+//                        }
+//                        recyclerView.adapter = homeAdapter
+//                    }
+//
+//                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+//                    }
+//
+//                    override fun onFail(e: ApiError) {
+//                    }
+//
+//                })
+
+            netWork.getApi(Api::class.java).getAaData()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : ApiBaseResponse<HomeBean>(activity!!) {
+                        override fun onSuccess(t: HomeBean?) {
+                            if (homeAdapter == null) {
+                                homeAdapter = HomeAdapter(context,t!!.datas)
+                            }
+                            recyclerView.adapter = homeAdapter
                         }
-                        recyclerView.adapter = homeAdapter
-                    }
 
-                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
-                    }
+                        override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+                        }
 
-                    override fun onFail(e: ApiError) {
-                    }
+                        override fun onFail(e: ApiError) {
+                        }
 
-                })
+                    })
         }else{
             netWork.getApi(Api::class.java).getSqData()
                     .subscribeOn(Schedulers.io())

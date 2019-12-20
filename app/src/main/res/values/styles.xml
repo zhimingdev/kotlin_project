@@ -9,7 +9,8 @@
     <style name="AppTheme.splas" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@mipmap/default_splash_bg</item>
+        <!--<item name="android:windowBackground">@mipmap/default_splash_bg</item>-->
+        <item name="android:windowBackground">@mipmap/splash</item>
     </style>
 
     <style name="AppTheme.FullScreen" parent="AppTheme">

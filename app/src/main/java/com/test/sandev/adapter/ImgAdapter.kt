@@ -8,8 +8,10 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 
 import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import com.test.sandev.R
 import com.test.sandev.module.SqModule
+import com.test.sandev.utils.CircleCornerForm
 
 class ImgAdapter(private val context: Context, private val images: List<SqModule.CotentBean>) : BaseAdapter() {
 
@@ -36,7 +38,10 @@ class ImgAdapter(private val context: Context, private val images: List<SqModule
         } else {
             myViewholder = convertView.tag as MyViewholder
         }
-        Glide.with(context).load(images!![position].imageurl).into(myViewholder.imageView!!)
+        Picasso.with(context)
+                .load(images!![position].imageurl)
+                .transform(CircleCornerForm(context))
+                .into(myViewholder.imageView!!)
         return convertView
     }
 

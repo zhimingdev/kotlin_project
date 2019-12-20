@@ -77,9 +77,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void initDate() {
+    protected void initSandevDate() {
         items.clear();
-        items.add("足球");
+        items.add("推荐");
         items.add("广场");
         netWork = new NetWork();
         loadData();
@@ -110,7 +110,30 @@ public class HomeFragment extends BaseFragment {
 
 
     private void loadData() {
-        netWork.getApi(Api.class).getBanner()
+//        netWork.getApi(Api.class).getBanner()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new ApiBaseResponse<List<BannerBean>>(getActivity()) {
+//                    @Override
+//                    public void onFail(@NotNull ApiError e) {}
+//
+//                    @Override
+//                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {}
+//
+//                    @Override
+//                    public void onSuccess(@Nullable List<BannerBean> bannerBeans) {
+//                        list = bannerBeans;
+//                        bannerView.setPages(list, new MZHolderCreator<BannerViewHolder>() {
+//                            @Override
+//                            public BannerViewHolder createViewHolder() {
+//                                return new BannerViewHolder();
+//                            }
+//                        });
+//                        bannerView.start();
+//                    }
+//                });
+
+        netWork.getApi(Api.class).getVV()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ApiBaseResponse<List<BannerBean>>(getActivity()) {
@@ -157,7 +180,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void initListenter() {
+    protected void initSandevListenter() {
         bannerView.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int i) {

@@ -59,15 +59,23 @@
         android:textSize="14sp"
         tools:text="吃呢哦啊奔赴v阿尔吃呢奥能否按年末那饿哦你发词吗恶女啊你才能瑁恩擦" />
 
-    <GridView
+    <!--<GridView-->
+        <!--android:id="@+id/rv_image"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/tv_content"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:horizontalSpacing="4dp"-->
+        <!--android:numColumns="auto_fit"-->
+        <!--tools:listitem="@layout/imte_image" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         android:layout_below="@id/tv_content"
-        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:horizontalSpacing="4dp"
-        android:numColumns="auto_fit"
         tools:listitem="@layout/imte_image" />
 
     <LinearLayout

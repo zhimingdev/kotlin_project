@@ -42,4 +42,13 @@ interface Api {
 
     @GET("v1/home/getSquare")
     fun getSqData() : Observable<BaseResponse<List<SqModule>>>
+
+    @GET("v1/vv_home/getInfo")
+    fun getAaData() : Observable<BaseResponse<HomeBean>>
+
+    @GET("v1/vv_video/getV")
+    fun getAvInfo() :Observable<BaseResponse<List<VideoModule>>>
+
+    @GET("v1/home/vv_get")
+    fun getVV() :Observable<BaseResponse<List<BannerBean>>>
 }

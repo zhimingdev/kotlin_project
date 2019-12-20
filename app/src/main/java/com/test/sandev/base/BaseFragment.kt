@@ -24,15 +24,15 @@ abstract class BaseFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initDate()
-        initListenter()
+        initSandevDate()
+        initSandevListenter()
     }
 
-    open protected fun initDate() {
+    open protected fun initSandevDate() {
 
     }
 
-    open protected fun initListenter() {
+    open protected fun initSandevListenter() {
 
     }
 

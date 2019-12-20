@@ -35,8 +35,12 @@ class SqAdapter(private val context : Context?, private val list :List<SqModule>
         holder.tvCollect.text = list!![position].loves
         holder.tvMsg.text = list!![position].discuss.toString()
         holder.tvTime.text = list!![position].time
-        var imageAdapter : ImgAdapter= ImgAdapter(context,list!![position].cotent)
-        holder.recyclerView.adapter = imageAdapter
+//        var imageAdapter : ImgAdapter= ImgAdapter(context,list!![position].cotent)
+//        holder.recyclerView.adapter = imageAdapter
+        var gridelayout = GridLayoutManager(context,list!![position].cotent.size)
+        holder.recyclerView.layoutManager = gridelayout
+        var adapter = NewImageAdapter(context,list!![position].cotent)
+        holder.recyclerView.adapter = adapter
     }
 
 
@@ -45,7 +49,8 @@ class SqAdapter(private val context : Context?, private val list :List<SqModule>
         val username : TextView = itemview.findViewById(R.id.tv_user_name)
         val address : TextView = itemview.findViewById(R.id.tv_add)
         val tvContent : TextView = itemview.findViewById(R.id.tv_content)
-        val recyclerView : GridView = itemview.findViewById(R.id.rv_image)
+//        val recyclerView : GridView = itemview.findViewById(R.id.rv_image)
+        val recyclerView : RecyclerView = itemview.findViewById(R.id.rv_image)
         val tvCollect : TextView = itemview.findViewById(R.id.tv_collect)
         val tvMsg : TextView = itemview.findViewById(R.id.tv_msg)
         val tvTime : TextView = itemview.findViewById(R.id.tv_item_time)

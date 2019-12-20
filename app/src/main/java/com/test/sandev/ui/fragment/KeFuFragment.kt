@@ -27,7 +27,7 @@ class KeFuFragment : BaseFragment() {
         return view
     }
 
-    override fun initDate() {
+    override fun initSandevDate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val cookieManager = CookieManager.getInstance()
             cookieManager.setAcceptThirdPartyCookies(webview, true)

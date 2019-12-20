@@ -41,7 +41,7 @@ class YueDanFragment : BaseFragment() {
     }
 
 
-    override fun initDate() {
+    override fun initSandevDate() {
         showName()
         getPackInfo()
         tv_version.text = "V 1.0.0"
@@ -130,7 +130,7 @@ class YueDanFragment : BaseFragment() {
     }
 
 
-    override fun initListenter() {
+    override fun initSandevListenter() {
         rl_cache.setOnClickListener {
             cacheDialog =
                     com.test.sandev.utils.UsualDialogger.Builder(activity)
