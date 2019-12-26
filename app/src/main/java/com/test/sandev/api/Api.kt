@@ -51,4 +51,12 @@ interface Api {
 
     @GET("v1/home/vv_get")
     fun getVV() :Observable<BaseResponse<List<BannerBean>>>
+
+    @FormUrlEncoded
+    @POST("v1/record/getrecorddetail")
+    fun getRecordDetail(@FieldMap map : Map<String,Int>):Observable<BaseResponse<RecordModule>>
+
+    @GET("v1/home/matchrecord")
+    fun getMatchRecord() : Observable<BaseResponse<List<MatchModule>>>
+
 }

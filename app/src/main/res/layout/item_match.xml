@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_tags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    tools:text="西甲" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/shape_tv_bg"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="4dp"
+                    android:paddingBottom="2dp"
+                    android:text="已结束"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_left_team"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:src="@mipmap/img_mine" />
+
+                    <TextView
+                        android:id="@+id/tv_team_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@id/iv_left_team"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        tools:text="西甲" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:id="@+id/tv_left_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="--"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_right_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_right_team"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+                            android:src="@mipmap/img_mine" />
+
+                        <TextView
+                            android:id="@+id/tv_team_name_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@id/iv_right_team"
+                            android:textColor="@android:color/black"
+                            android:textSize="14sp"
+                            tools:text="西甲" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

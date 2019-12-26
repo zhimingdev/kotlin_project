@@ -10,5 +10,8 @@
     <color name="white">#fff</color>
     <color name="gray">#dedcdc</color>
     <color name="red">#f00</color>
+    <color name="weskit_tab_background">#FFB14C</color>
+    <color name="weskit_text_color">#333333</color>
+    <color name="light_green">#33FF00</color>
 
 </resources>

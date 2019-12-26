@@ -110,30 +110,7 @@ public class HomeFragment extends BaseFragment {
 
 
     private void loadData() {
-//        netWork.getApi(Api.class).getBanner()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new ApiBaseResponse<List<BannerBean>>(getActivity()) {
-//                    @Override
-//                    public void onFail(@NotNull ApiError e) {}
-//
-//                    @Override
-//                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {}
-//
-//                    @Override
-//                    public void onSuccess(@Nullable List<BannerBean> bannerBeans) {
-//                        list = bannerBeans;
-//                        bannerView.setPages(list, new MZHolderCreator<BannerViewHolder>() {
-//                            @Override
-//                            public BannerViewHolder createViewHolder() {
-//                                return new BannerViewHolder();
-//                            }
-//                        });
-//                        bannerView.start();
-//                    }
-//                });
-
-        netWork.getApi(Api.class).getVV()
+        netWork.getApi(Api.class).getBanner()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ApiBaseResponse<List<BannerBean>>(getActivity()) {
@@ -155,6 +132,29 @@ public class HomeFragment extends BaseFragment {
                         bannerView.start();
                     }
                 });
+
+//        netWork.getApi(Api.class).getVV()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new ApiBaseResponse<List<BannerBean>>(getActivity()) {
+//                    @Override
+//                    public void onFail(@NotNull ApiError e) {}
+//
+//                    @Override
+//                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {}
+//
+//                    @Override
+//                    public void onSuccess(@Nullable List<BannerBean> bannerBeans) {
+//                        list = bannerBeans;
+//                        bannerView.setPages(list, new MZHolderCreator<BannerViewHolder>() {
+//                            @Override
+//                            public BannerViewHolder createViewHolder() {
+//                                return new BannerViewHolder();
+//                            }
+//                        });
+//                        bannerView.start();
+//                    }
+//                });
     }
 
     public void showdialog (final String url) {

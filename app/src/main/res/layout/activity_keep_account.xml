@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+       style="@style/ViewDefaultLine" />
+
+    <RelativeLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_leibie"
+            android:layout_centerVertical="true"
+            android:textColor="@color/weskit_text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分类 :  "
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_toRightOf="@id/tv_leibie"
+            android:id="@+id/tv_category"
+            android:layout_centerVertical="true"
+            android:textColor="@color/weskit_text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_day"
+        android:layout_marginRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_weskit_current_day"
+            android:layout_centerVertical="true"
+            android:textColor="@color/weskit_text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="2018年6月5日 周二"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_biezhu"
+            android:layout_centerVertical="true"
+            android:textColor="@color/weskit_text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备注 :  "
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/et_message"
+            android:layout_toRightOf="@id/tv_biezhu"
+            android:layout_centerVertical="true"
+            android:textColor="@color/weskit_text_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:hint="添加备注"
+            android:background="@null"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_yuan"
+            android:textColor="@color/weskit_text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="金额(元) :  "
+            android:textSize="14sp"/>
+
+        <com.test.sandev.view.XEditText
+            android:layout_centerVertical="true"
+            android:id="@+id/et_money"
+            android:layout_toRightOf="@id/tv_yuan"
+            android:textColor="@color/weskit_text_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:hint="填写金额"
+            android:inputType="numberDecimal"
+            android:background="@null"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/but_add_accountbook"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:text="记一笔"
+        android:textColor="@color/white"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="16sp"
+        android:background="@drawable/weskit_keep_background"/>
+
+</LinearLayout>

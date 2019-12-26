@@ -1,26 +1,40 @@
 package com.test.sandev.ui.activity
 
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ToastUtils
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.system.exitProcess
-import android.widget.Toast
 import android.view.KeyEvent
-import androidx.core.view.get
+import com.ashokvarma.bottomnavigation.BottomNavigationBar
+import com.blankj.utilcode.util.SPUtils
 import com.test.sandev.R
 import com.test.sandev.api.Api
 import com.test.sandev.base.BaseActivity
 import com.test.sandev.module.ApiError
 import com.test.sandev.module.BaseResponse
+import com.test.sandev.module.MessageEvent
 import com.test.sandev.module.PackModule
-import com.test.sandev.ui.fragment.KeFuFragment
-import com.test.sandev.ui.fragment.VBangFragment
 import com.test.sandev.utils.ApiBaseResponse
 import com.test.sandev.utils.FragmentUtils
 import com.test.sandev.utils.NetWork
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import com.ashokvarma.bottomnavigation.ShapeBadgeItem
+import android.R.attr.colorPrimaryDark
+import com.ashokvarma.bottomnavigation.TextBadgeItem
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import com.ashokvarma.bottomnavigation.BottomNavigationItem
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.test.sandev.ui.fragment.*
+import org.greenrobot.eventbus.ThreadMode
+import kotlin.properties.Delegates
 
 
 class MainActivity : BaseActivity() {
@@ -30,48 +44,147 @@ class MainActivity : BaseActivity() {
     var currentfragment: Fragment? = null
     var lasttime: Long = 0
     val network by lazy { NetWork() }
+    var lastSelectedPosition: Int = 0
+    lateinit var homeFragment: HomeFragment
+    lateinit var vBangFragment: VBangFragment
+    lateinit var keFuFragment: KeFuFragment
+    lateinit var yueDanFragment: YueDanFragment
+    lateinit var findFragment: FindFragment
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
     }
 
     override fun initData() {
-        network.getApi(Api::class.java).getPack()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : ApiBaseResponse<PackModule>(this) {
-                    override fun onSuccess(t: PackModule?) {
-                        println("======" + t!!.flag)
-                        if (t!!.flag!!) {
-                            bottomBar.getTabWithId(R.id.tab_yuedan).badgeHidesWhenActive = false
-                            bottomBar.getTabWithId(R.id.tab_yuedan).setBadgeCount(1)
-                        }
-                    }
+        homeFragment = HomeFragment()
+        vBangFragment = VBangFragment()
+        findFragment = FindFragment()
+        keFuFragment = KeFuFragment()
+        yueDanFragment = YueDanFragment()
+        EventBus.getDefault().register(this)
+        bottom_navigation_bar.setMode(BottomNavigationBar.MODE_FIXED)
+        // TODO 设置背景色样式
+        bottom_navigation_bar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
+        bottom_navigation_bar.setBarBackgroundColor(android.R.color.white)
+        var mTextBadgeItem = TextBadgeItem()
+                .setBorderWidth(4)
+                .setBackgroundColorResource(R.color.red)
+                .setText("1")
+                .setHideOnSelect(false)
 
-                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
-                    }
+        bottom_navigation_bar
+                .addItem(BottomNavigationItem(R.mipmap.ic_bottom_home_icon, "首页").setActiveColorResource(R.color.colorPrimary).setInActiveColorResource(android.R.color.darker_gray))
+                .addItem(BottomNavigationItem(R.mipmap.ic_bottom_mv_unselect, "视频").setActiveColorResource(R.color.colorPrimary).setInActiveColorResource(android.R.color.darker_gray))
+                .addItem(BottomNavigationItem(R.mipmap.ic_find, "发现").setActiveColorResource(R.color.colorPrimary).setInActiveColorResource(android.R.color.darker_gray))
+                .addItem(BottomNavigationItem(R.mipmap.tab_kefu, "客服").setActiveColorResource(R.color.colorPrimary).setInActiveColorResource(android.R.color.darker_gray))
+                .addItem(BottomNavigationItem(R.mipmap.ic_bottom_mvlist_unselect, "我的").setActiveColorResource(R.color.colorPrimary).setInActiveColorResource(android.R.color.darker_gray).setBadgeItem(mTextBadgeItem))
+                .setFirstSelectedPosition(lastSelectedPosition)
+                .initialise()
+//        network.getApi(Api::class.java).getPack()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(object : ApiBaseResponse<PackModule>(this) {
+//                    override fun onSuccess(t: PackModule?) {
+//                        if (t!!.flag!!) {
+//
+//                        }
+//                    }
+//
+//                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+//                    }
+//
+//                    override fun onFail(e: ApiError) {
+//                    }
+//
+//                })
 
-                    override fun onFail(e: ApiError) {
-                    }
-
-                })
+        switchFragment(homeFragment)
     }
 
     override fun initLisenter() {
-        bottomBar.setOnTabSelectListener {
-            var transaction = supportFragmentManager.beginTransaction()
-            showfragment = FragmentUtils.instance.getFragment(it)
-            if (currentfragment != null && showfragment != currentfragment) {
-                transaction.hide(currentfragment!!)
+        bottom_navigation_bar.setTabSelectedListener(object : BottomNavigationBar.OnTabSelectedListener {
+            override fun onTabUnselected(position: Int) {
             }
-            if (showfragment!!.isAdded) {
-                transaction.show(FragmentUtils.instance.getFragment(it))
-            } else {
-                transaction.add(R.id.container, showfragment!!)
+
+            override fun onTabSelected(position: Int) {
+                when (position) {
+                    0 -> {
+                        switchFragment(homeFragment)
+                        SPUtils.getInstance().put("index",position)
+                    }
+                    1 -> {
+                        switchFragment(vBangFragment)
+                        SPUtils.getInstance().put("index",position)
+                    }
+                    2 -> {
+                        if (SPUtils.getInstance().getString("logininfo").isBlank()) {
+                            var index = SPUtils.getInstance().getInt("index",0)
+                            when(index) {
+                                0 -> {
+                                    bottom_navigation_bar.selectTab(0)
+                                    SPUtils.getInstance().put("index",position)
+                                }
+                                1 -> {
+                                    bottom_navigation_bar.selectTab(1)
+                                    SPUtils.getInstance().put("index",position)
+                                }
+                                3 -> {
+                                    bottom_navigation_bar.selectTab(3)
+                                    SPUtils.getInstance().put("index",position)
+                                }
+                                4 -> {
+                                    bottom_navigation_bar.selectTab(4)
+                                    SPUtils.getInstance().put("index",position)
+                                }
+                            }
+                            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                            return
+                        } else {
+                            switchFragment(findFragment)
+                        }
+                    }
+                    3 -> {
+                        switchFragment(keFuFragment)
+                        SPUtils.getInstance().put("index",position)
+                    }
+                    4 -> {
+                        switchFragment(yueDanFragment)
+                        SPUtils.getInstance().put("index",position)
+                    }
+                    else -> switchFragment(homeFragment)
+                }
             }
-            transaction.commit()
-            currentfragment = showfragment
+
+            override fun onTabReselected(position: Int) {
+            }
+
+        })
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public fun onEvent(msg: MessageEvent) {
+        when (msg.message) {
+            "success" -> {
+                bottom_navigation_bar.selectTab(2)
+//                switchFragment(findFragment)
+                SPUtils.getInstance().put("index",2)
+            }
         }
+    }
+
+    fun switchFragment(fragment: Fragment) {
+        showfragment = fragment
+        var beginTransaction = supportFragmentManager.beginTransaction()
+        if (currentfragment != null && showfragment != currentfragment) {
+            beginTransaction.hide(currentfragment!!)
+        }
+        if (showfragment!!.isAdded) {
+            beginTransaction.show(showfragment!!)
+        } else {
+            beginTransaction.add(R.id.container, showfragment!!)
+        }
+        beginTransaction.commitAllowingStateLoss()
+        currentfragment = showfragment
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -99,5 +212,10 @@ class MainActivity : BaseActivity() {
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 }

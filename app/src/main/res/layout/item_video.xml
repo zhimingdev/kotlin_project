@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
@@ -12,7 +13,10 @@
         android:layout_height="200dp"/>
 
     <RelativeLayout
-        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -25,6 +29,7 @@
             android:textColor="@android:color/black"/>
 
         <TextView
+            android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_playcount"
             android:layout_marginLeft="10dp"
@@ -35,6 +40,7 @@
             android:textColor="@android:color/black"/>
 
         <TextView
+            android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv"
             android:layout_marginLeft="10dp"
@@ -45,6 +51,7 @@
             android:textColor="@android:color/black"/>
 
         <LinearLayout
+            android:id="@+id/ll_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -53,9 +60,10 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/ic_starts"/>
+                android:id="@+id/iv_starts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/ic_nostarts"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,6 +74,15 @@
                 android:textColor="@android:color/black"/>
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_share"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/ll_start"/>
 
     </RelativeLayout>
 </LinearLayout>

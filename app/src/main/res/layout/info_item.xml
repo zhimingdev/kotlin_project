@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_info"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:src="@mipmap/img_mine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="前锋"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_host_qf_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="前锋"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:id="@+id/tv_host_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="0"
+                android:textColor="@android:color/black"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="得分"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_guest_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="0"
+                android:textColor="@android:color/black"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingRight="5dp">
+
+                    <TextView
+                        android:id="@+id/tv_guest_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="前锋"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_qf_guestname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_guest_address"
+                        android:layout_alignParentRight="true"
+                        android:text="前锋"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/iv_end_info"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:paddingRight="8dp"
+                    android:src="@mipmap/img_mine" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 29
@@ -52,6 +53,12 @@ android {
     }
 }
 
+greendao {
+    schemaVersion 1 //指定数据库schema版本号，迁移等操作会用到
+    daoPackage 'com.test.sandev.greendao'//通过gradle插件生成的数据库相关文件  xxx.xxx.xx 一般填写包名
+    targetGenDir 'src/main/java'  //自定义生成数据库文件的目录
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -62,9 +69,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation('com.roughike:bottom-bar:2.3.1') {
-        exclude group: 'com.android.support'
-    }
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.0.3'
     //noinspection GradleCompatible
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
@@ -86,4 +91,9 @@ dependencies {
     implementation "com.robinhood.ticker:ticker:1.2.2"
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation project(path: ':nicevideoplayer')
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30"
+    implementation 'com.bigkoo:alertview:1.0.3'
+    implementation 'com.zhy.base:fileprovider:1.0.0'
+    implementation 'top.zibin:Luban:1.1.8'
 }

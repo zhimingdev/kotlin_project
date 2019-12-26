@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="比赛详情"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_match_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_back_black" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_tags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="西甲"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_tv_bg"
+                    android:text="已结束"
+                    android:textColor="@color/white"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/iv_left_team"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="15dp"
+                        android:src="@mipmap/img_mine" />
+
+                    <TextView
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_team_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/iv_left_team"
+                        tools:text="西甲"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:id="@+id/tv_left_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="--"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_right_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:id="@+id/iv_right_team"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="15dp"
+                            android:src="@mipmap/img_mine" />
+
+                        <TextView
+                            android:id="@+id/tv_team_name_right"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/iv_right_team"
+                            tools:text="西甲"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:text="球员数据"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:listitem="@layout/info_item"
+                        android:id="@+id/rc_info"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="3dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/red"/>
+
+                    <TextView
+                        android:id="@+id/tv_host"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:text="巴萨阵容"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:background="@mipmap/zuqiu_bg">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gv_one"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gv_two"
+                        android:layout_marginTop="120dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gv_three"
+                        android:layout_marginBottom="120dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gv_four"
+                        android:layout_marginBottom="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="3dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/green"/>
+
+                    <TextView
+                        android:id="@+id/tv_guest"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:text="巴萨阵容"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:background="@mipmap/zuqiu_bg">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gv_guset_one"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gv_guset_two"
+                        android:layout_marginTop="120dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gv_guset_three"
+                        android:layout_marginBottom="120dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gv_guset_four"
+                        android:layout_marginBottom="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

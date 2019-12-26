@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_life_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            tools:text="2019-10"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/book_sort_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/tv_life_time"
+            android:text="数码"
+            android:textColor="#FF333333"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/book_sort_tv"
+            android:text="数码"
+            android:layout_marginRight="100dp"
+            android:textColor="#FF333333"
+            android:textSize="14dp"
+            android:id="@+id/tv_life_msg"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/book_amount_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="12,170.00"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="16dp"
+        android:background="#F0F0F0" />
+
+</LinearLayout>

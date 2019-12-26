@@ -56,3 +56,6 @@
 -keepattributes EnclosingMethod
 -keep class com.test.sandev.module.**{ *; }
 -keep class com.test.sandev.ui.** {*;}
+-keep class com.test.sandev.entity.** {*;}
+-keep class com.test.sandev.greendao.** {*;}
+-keep class com.test.sandev.MyApplication

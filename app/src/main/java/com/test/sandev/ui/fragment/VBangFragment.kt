@@ -29,24 +29,7 @@ class VBangFragment : BaseFragment() {
     }
 
     private fun getDtat() {
-//        network.getApi(Api::class.java).getVideoData()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object :ApiBaseResponse<List<VideoModule>>(activity!!) {
-//                    override fun onSuccess(t: List<VideoModule>?) {
-//                        data = t
-//                        val adapter = VideoAdapter(context!!, data)
-//                        rv_view.adapter = adapter
-//                    }
-//
-//                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
-//                    }
-//
-//                    override fun onFail(e: ApiError) {
-//                    }
-//
-//                })
-        network.getApi(Api::class.java).getAvInfo()
+        network.getApi(Api::class.java).getVideoData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object :ApiBaseResponse<List<VideoModule>>(activity!!) {
@@ -63,6 +46,23 @@ class VBangFragment : BaseFragment() {
                     }
 
                 })
+//        network.getApi(Api::class.java).getAvInfo()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(object :ApiBaseResponse<List<VideoModule>>(activity!!) {
+//                    override fun onSuccess(t: List<VideoModule>?) {
+//                        data = t
+//                        val adapter = VideoAdapter(context!!, data)
+//                        rv_view.adapter = adapter
+//                    }
+//
+//                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+//                    }
+//
+//                    override fun onFail(e: ApiError) {
+//                    }
+//
+//                })
     }
 
     override fun initSandevDate() {

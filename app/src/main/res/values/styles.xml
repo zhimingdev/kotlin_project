@@ -9,8 +9,8 @@
     <style name="AppTheme.splas" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <!--<item name="android:windowBackground">@mipmap/default_splash_bg</item>-->
-        <item name="android:windowBackground">@mipmap/splash</item>
+        <item name="android:windowBackground">@mipmap/default_splash_bg</item>
+        <!--<item name="android:windowBackground">@mipmap/splash</item>-->
     </style>
 
     <style name="AppTheme.FullScreen" parent="AppTheme">
@@ -39,5 +39,11 @@
 
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">@dimen/tab_layout_text_size</item>
+    </style>
+
+    <style name="ViewDefaultLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">#e1e1e1</item>
     </style>
 </resources>

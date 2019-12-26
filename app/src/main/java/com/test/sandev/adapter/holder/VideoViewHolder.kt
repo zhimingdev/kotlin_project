@@ -1,5 +1,6 @@
 package com.test.sandev.adapter.holder
 
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -12,6 +13,10 @@ import com.test.sandev.module.VideoModule
 import com.xiao.nicevideoplayer.NiceVideoPlayer
 import com.xiao.nicevideoplayer.TxVideoPlayerController
 import kotlinx.android.synthetic.main.item_video.view.*
+import android.content.Intent.ACTION_SEND
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
+import com.blankj.utilcode.util.ActivityUtils.startActivity
+
 
 /**
  * Created by XiaoJianjun on 2017/5/21.
@@ -46,5 +51,23 @@ class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.tv_playcount.text = video.seecount
         itemView.tv_time.text = video.time
         itemView.tv_starts.text = video.starts
+        itemView.iv_starts.setOnClickListener {
+            var starst = itemView.tv_starts.text.toString().toInt()
+            if (starst == (video.starts!!.toInt()+1)) {
+                itemView.tv_starts.text = (starst -1).toString()
+                itemView.iv_starts.setImageResource(R.mipmap.ic_nostarts)
+            }else {
+                itemView.tv_starts.text = (starst + 1).toString()
+                itemView.iv_starts.setImageResource(R.mipmap.ic_starts)
+            }
+        }
+
+        itemView.iv_share.setOnClickListener {
+            val sendIntent = Intent()
+            sendIntent.action = ACTION_SEND
+            sendIntent.putExtra(Intent.EXTRA_STREAM, video.imageurl)
+            sendIntent.type = "audio/*"
+            startActivity(Intent.createChooser(sendIntent, ""))
+        }
     }
 }
