@@ -30,10 +30,6 @@ import com.test.sandev.api.Api
 import com.test.sandev.base.BaseFragment
 import com.test.sandev.constans.UrlConstans
 import com.test.sandev.module.*
-import com.test.sandev.ui.activity.CollectActivity
-import com.test.sandev.ui.activity.LoginActivity
-import com.test.sandev.ui.activity.SecurpacActivity
-import com.test.sandev.ui.activity.WebActivity
 import com.test.sandev.utils.*
 import com.zhy.base.fileprovider.FileProvider7
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,6 +48,8 @@ import java.util.*
 import android.util.Base64
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
+import com.test.sandev.lock.LockPatternUtils
+import com.test.sandev.ui.activity.*
 import java.io.IOException
 
 class YueDanFragment : BaseFragment() {
@@ -65,6 +63,7 @@ class YueDanFragment : BaseFragment() {
     private val REQUEST_CODE_TAKE_PHOTO_ALBUM = 0x00
     private var mCurrentPhotoPath: String? = null
     private var mFileUri: Uri? = null
+    private var mLockPatternUtils : LockPatternUtils? = null
 
     private val REQUEST_EXTERNAL_STORAGE = 1
     private val PERMISSIONS_STORAGE = arrayOf("android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE")
@@ -85,6 +84,18 @@ class YueDanFragment : BaseFragment() {
         tv_cache.text = "0 B"
         tv_cache.text = FileUtils.getSize(Utils.getApp().cacheDir)
         inv.setNumber("1")
+        mLockPatternUtils = LockPatternUtils(context)
+        updataStates()
+    }
+
+    private fun updataStates() {
+        if (PreferenceCache.getGestureSwitch()) {
+            iv_hand_switch.setImageResource(R.mipmap.auto_bidding_off)
+            ll_setting_hand.visibility = View.VISIBLE
+        } else {
+            iv_hand_switch.setImageResource(R.mipmap.auto_bidding_on)
+            ll_setting_hand.visibility = View.GONE
+        }
     }
 
     private fun getPackInfo() {
@@ -239,7 +250,7 @@ class YueDanFragment : BaseFragment() {
 
         ll_collect.setOnClickListener {
             var loginid = SPUtils.getInstance().getInt("loginid")
-            if (loginid != null) {
+            if (loginid != -1) {
                 var intent = Intent(context, CollectActivity::class.java)
                 startActivity(intent)
             } else {
@@ -256,6 +267,33 @@ class YueDanFragment : BaseFragment() {
             } else {
                 show()
             }
+        }
+
+        iv_hand_switch.setOnClickListener {
+            var loginid = SPUtils.getInstance().getInt("loginid")
+            if (loginid != -1) {
+                if (PreferenceCache.getGestureSwitch()) {
+                    //开的状态
+                    PreferenceCache.putGestureSwitch(false)
+                    updataStates()
+                } else {
+                    //关的状态
+                    if (mLockPatternUtils!!.savedPatternExists()) {
+                        PreferenceCache.putGestureSwitch(true)
+                        updataStates()
+                    } else {
+                        val intent = Intent(context, CreateGesturePasswordActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            } else {
+                var intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        ll_setting_hand.setOnClickListener {
+            val intent = Intent(context, UnlockGesturePasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -410,6 +448,11 @@ class YueDanFragment : BaseFragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         showName()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updataStates()
     }
 
     fun toRoundBitmap(bitmap: Bitmap) {

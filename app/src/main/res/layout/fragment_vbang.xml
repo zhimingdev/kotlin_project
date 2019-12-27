@@ -5,41 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:gravity="center"
-        android:text="精彩视频"
-        android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        app:tabBackground="@android:color/transparent"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabIndicatorColor="@color/red"
+        app:tabSelectedTextColor="@color/red"
+        app:tabTextColor="@android:color/darker_gray"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabMode="fixed"/>
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
+        android:id="@+id/fl_vb"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-           <ImageView
-               android:layout_width="match_parent"
-               android:layout_height="160dp"
-               android:src="@mipmap/qiu"
-               android:scaleType="centerCrop"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"/>
-
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>

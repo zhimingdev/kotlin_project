@@ -6,12 +6,23 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.ViewPropertyAnimatorListener
 import com.test.sandev.R
 import com.test.sandev.base.BaseActivity
+import com.test.sandev.lock.LockPatternUtils
+import com.test.sandev.utils.PreferenceCache
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : BaseActivity(), ViewPropertyAnimatorListener {
     override fun onAnimationEnd(view: View?) {
-        var intent = Intent(this,MainActivity::class.java)
-        startActivity(intent)
+        var mGestureSwitch = PreferenceCache.getGestureSwitch()
+        var mLockPatternUtils = LockPatternUtils(this)
+        var mLock = mLockPatternUtils.savedPatternExists()
+        if (mLock && mGestureSwitch) {
+            var intent = Intent(this,UnlockGesturePasswordActivity::class.java)
+            intent.putExtra("from","SplashActivity")
+            startActivity(intent)
+        }else {
+            var intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
         finish()
     }
 

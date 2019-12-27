@@ -42,6 +42,8 @@
         <activity android:name=".ui.activity.WeskitTallyActivity"/>
         <activity android:name=".ui.activity.LifeRecordActivity"/>
         <activity android:name=".ui.activity.KeepAccounActivity"/>
+        <activity android:name=".ui.activity.UnlockGesturePasswordActivity"/>
+        <activity android:name=".ui.activity.CreateGesturePasswordActivity"/>
     </application>
 
 </manifest>

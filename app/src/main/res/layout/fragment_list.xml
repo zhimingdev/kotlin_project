@@ -1,65 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:focusableInTouchMode="true"
-              android:descendantFocusability="blocksDescendants"
-              android:fillViewport="true"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <com.zhouwei.mzbanner.MZBannerView
-                    android:visibility="visible"
-                    android:id="@+id/banner"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    app:open_mz_mode="true"
-                    app:canLoop="true"
-                    app:indicatorAlign="center"
-                    app:indicatorPaddingLeft="10dp"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                app:tabBackground="@color/white"
-                app:tabIndicatorColor="@color/red"
-                app:tabSelectedTextColor="@color/red"
-                app:tabTextColor="@android:color/darker_gray"
-                app:tabTextAppearance="@style/TabLayoutTextStyle"
-                app:tabMode="fixed">
+                    <com.zhouwei.mzbanner.MZBannerView
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:visibility="visible"
+                        app:canLoop="true"
+                        app:indicatorAlign="center"
+                        app:indicatorPaddingLeft="10dp"
+                        app:open_mz_mode="true" />
 
-            </com.google.android.material.tabs.TabLayout>
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <FrameLayout
-                android:id="@+id/fl_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                        <ImageView
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="3dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorPrimary"/>
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="今日进球榜"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginLeft="5dp"/>
+
+                    </LinearLayout>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:background="@android:color/white" />
+
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="3dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorPrimary"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="胜率图"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginLeft="5dp"/>
+
+                    </LinearLayout>
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/chart1"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_go_kefu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="80dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@mipmap/pop_default" />
+
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_go_kefu"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginRight="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@mipmap/pop_default"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

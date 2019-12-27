@@ -96,4 +96,5 @@ dependencies {
     implementation 'com.bigkoo:alertview:1.0.3'
     implementation 'com.zhy.base:fileprovider:1.0.0'
     implementation 'top.zibin:Luban:1.1.8'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 }
