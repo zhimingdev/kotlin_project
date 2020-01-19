@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimary" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="积分排名"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:id="@+id/tv_team_detail"
+            android:textColor="@android:color/black"
+            android:layout_margin="15dp"
+            tools:text="测试"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1000">
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="35dp"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:text="赢"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:text="输"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:text="平"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:text="进球"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="35dp"
+                android:text="排名"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="主"/>
+
+            <TextView
+                android:id="@+id/tv_ying"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_shu"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_ping"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_jingqiu"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_paiming"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:id="@+id/tv_team_guest"
+            android:textColor="@android:color/black"
+            android:layout_margin="15dp"
+            tools:text="测试"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="#1000">
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="赢"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="输"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="平"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="进球"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="排名"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:text="主"/>
+
+            <TextView
+                android:id="@+id/tv_guest_ying"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_guest_shu"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_guest_ping"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_guest_jingqiu"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_guest_paiming"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimary" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="赛事"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:id="@+id/tv_host_saishi"
+            android:textColor="@android:color/black"
+            android:layout_margin="15dp"
+            tools:text="测试"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="#1000">
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:layout_height="match_parent"
+                android:text="时间"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="match_parent"
+                android:text="联赛"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:text="赛事对阵"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="比分"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="状态"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_time"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_liansai"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_duizheng"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:text="-"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_bifen"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:text="-"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_type"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:gravity="center"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_two_time"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_two_liansai"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_two_duizheng"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:text="-"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_two_bifen"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:text="-"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_hostsaishi_two_type"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:gravity="center"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:id="@+id/tv_guest_saishi"
+            android:textColor="@android:color/black"
+            android:layout_margin="15dp"
+            tools:text="测试"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="#1000">
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:layout_height="match_parent"
+                android:text="时间"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="match_parent"
+                android:text="联赛"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:text="赛事对阵"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="比分"
+                android:gravity="center"/>
+
+            <TextView
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="状态"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_time"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_liansai"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_duizheng"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:text="-"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_bifen"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:text="-"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_type"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:gravity="center"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_two_time"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_two_liansai"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_two_duizheng"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:text="-"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_two_bifen"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:text="-"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_guestsaishi_two_type"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:gravity="center"
+                android:text="-"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

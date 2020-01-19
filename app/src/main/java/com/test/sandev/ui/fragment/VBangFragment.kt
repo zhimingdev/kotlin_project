@@ -1,34 +1,21 @@
 package com.test.sandev.ui.fragment
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.test.sandev.R
-import com.test.sandev.adapter.VideoAdapter
-import com.test.sandev.adapter.holder.VideoViewHolder
-import com.test.sandev.api.Api
 import com.test.sandev.base.BaseFragment
-import com.test.sandev.module.ApiError
-import com.test.sandev.module.BaseResponse
-import com.test.sandev.module.VideoModule
-import com.test.sandev.utils.ApiBaseResponse
 import com.test.sandev.utils.NetWork
-import com.xiao.nicevideoplayer.NiceVideoPlayerManager
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_vbang.*
-import java.util.ArrayList
 
 class VBangFragment : BaseFragment() {
 
     val network by lazy { NetWork() }
-    private val items = ArrayList<String>()
-    private var mHomeFragment: CommonFragment? = null
-    private var mUploadFragment: CommonFragment? = null
-    private var mVideoFragment: CommonFragment? = null
-    private var transaction: FragmentTransaction? = null
+    private var fragments : MutableList<Fragment>? = mutableListOf()
+    private var adapter : VBAdapter? = null
 
     override fun initView(): View {
         var view = LayoutInflater.from(context).inflate(R.layout.fragment_vbang,null)
@@ -36,64 +23,73 @@ class VBangFragment : BaseFragment() {
     }
 
     override fun initSandevDate() {
-        items.clear()
-        items.add("推荐")
-        items.add("集锦")
-        items.add("广场")
-        for (item in items) {
-            tab.addTab(tab.newTab().setText(item))
-        }
         initFragmentReplace()
     }
 
     override fun initSandevListenter() {
-        tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.position == 0) {
-                    val fragmentManager = activity!!.supportFragmentManager
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.show(mHomeFragment!!).hide(mUploadFragment!!).hide(mVideoFragment!!).commit()
-                } else if (tab.position == 1){
-                    val fragmentManager = activity!!.supportFragmentManager
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.show(mVideoFragment!!).hide(mHomeFragment!!).hide(mUploadFragment!!).commit()
-                } else{
-                    val fragmentManager = activity!!.supportFragmentManager
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.show(mUploadFragment!!).hide(mHomeFragment!!).hide(mVideoFragment!!).commit()
+        fl_vb.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            @SuppressLint("MissingSuperCall")
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> {
+                        fl_vb.currentItem = 0
+                        tv_one.setTextColor(resources.getColor(R.color.white))
+                        tv_one.background = resources.getDrawable(R.drawable.l_bg7)
+                        tv_two.setTextColor(resources.getColor(R.color.colorPrimary))
+                        tv_two.background = resources.getDrawable(R.drawable.l_bg8)
+                    }
+                    1 -> {
+                        fl_vb.currentItem = 1
+                        tv_two.setTextColor(resources.getColor(R.color.white))
+                        tv_two.background = resources.getDrawable(R.drawable.l_bg8_normal)
+                        tv_one.setTextColor(resources.getColor(R.color.colorPrimary))
+                        tv_one.background = resources.getDrawable(R.drawable.l_bg_nomal)
+                    }
                 }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
         })
+
+        tv_one.setOnClickListener {
+            fl_vb.currentItem = 0
+            tv_one.setTextColor(resources.getColor(R.color.white))
+            tv_one.background = resources.getDrawable(R.drawable.l_bg7)
+            tv_two.setTextColor(resources.getColor(R.color.colorPrimary))
+            tv_two.background = resources.getDrawable(R.drawable.l_bg8)
+        }
+
+        tv_two.setOnClickListener {
+            fl_vb.currentItem = 1
+            tv_two.setTextColor(resources.getColor(R.color.white))
+            tv_two.background = resources.getDrawable(R.drawable.l_bg8_normal)
+            tv_one.setTextColor(resources.getColor(R.color.colorPrimary))
+            tv_one.background = resources.getDrawable(R.drawable.l_bg_nomal)
+        }
     }
 
     private fun initFragmentReplace() {
-        // 获取到fragment碎片管理器
-        val manager = activity!!.supportFragmentManager
-        // 开启事务
-        transaction = manager.beginTransaction()
+        fragments!!.clear()
+        fragments!!.add(ZQFragment.getInstance())
+        fragments!!.add(LQFragment.getInstance())
+        adapter = VBAdapter()
+        fl_vb.adapter = adapter
+        fl_vb.currentItem = 0
+    }
 
-        // 获取到fragment的对象
-        mHomeFragment = CommonFragment.getInstanca(0)
-        mVideoFragment = CommonFragment.getInstanca(1)
-        mUploadFragment = CommonFragment.getInstanca(2)
+    inner class VBAdapter : FragmentPagerAdapter(activity!!.supportFragmentManager){
+        override fun getItem(position: Int): Fragment {
+            return fragments!![position]
+        }
 
-
-        // 设置要显示的fragment 和 影藏的fragment
-        transaction!!.add(R.id.fl_vb, mHomeFragment!!, "home").show(mHomeFragment!!)
-        transaction!!.add(R.id.fl_vb, mVideoFragment!!, "video").hide(mVideoFragment!!)
-        transaction!!.add(R.id.fl_vb, mUploadFragment!!, "upload").hide(mUploadFragment!!)
-
-        // 提交事务
-        transaction!!.commit()
-
+        override fun getCount(): Int {
+            return fragments!!.size
+        }
     }
 
 }

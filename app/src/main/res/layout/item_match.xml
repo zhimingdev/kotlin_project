@@ -22,19 +22,27 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/iv_end"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/id_end"/>
 
                 <TextView
                     android:id="@+id/tv_tags"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_centerVertical="true"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     tools:text="西甲" />
 
                 <TextView
+                    android:id="@+id/tv_type_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -46,6 +54,17 @@
                     android:text="已结束"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
+
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/tv_matcher_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="20-01-05"
+                    android:textColor="@android:color/black"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"/>
 
             </RelativeLayout>
 
@@ -62,7 +81,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1.5">
 
                     <ImageView
                         android:id="@+id/iv_left_team"
@@ -127,7 +146,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1.5">
 
                     <RelativeLayout
                         android:layout_width="match_parent"

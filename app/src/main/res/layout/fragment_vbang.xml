@@ -5,20 +5,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:tabBackground="@android:color/transparent"
-        app:tabRippleColor="@android:color/transparent"
-        app:tabIndicatorColor="@color/red"
-        app:tabSelectedTextColor="@color/red"
-        app:tabTextColor="@android:color/darker_gray"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"
-        app:tabMode="fixed"/>
+        android:padding="10dp">
 
-    <FrameLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/l_bg7"
+            android:padding="1px">
+
+            <TextView
+                android:id="@+id/tv_one"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/l_bg7"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="足球"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tv_two"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/l_bg8"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="篮球"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14dp" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#e1e1e1" />
+
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/fl_vb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

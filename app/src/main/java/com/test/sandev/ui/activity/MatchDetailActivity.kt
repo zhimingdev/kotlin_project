@@ -1,20 +1,19 @@
 package com.test.sandev.ui.activity
 
 import android.annotation.SuppressLint
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import com.squareup.picasso.Picasso
 import com.test.sandev.R
-import com.test.sandev.adapter.*
 import com.test.sandev.api.Api
 import com.test.sandev.base.BaseActivity
 import com.test.sandev.module.ApiError
 import com.test.sandev.module.BaseResponse
 import com.test.sandev.module.RecordModule
+import com.test.sandev.ui.fragment.TeamDataFragment
+import com.test.sandev.ui.fragment.ZrFragment
 import com.test.sandev.utils.ApiBaseResponse
-import com.test.sandev.utils.CircleCrop
 import com.test.sandev.utils.CircleTransform
 import com.test.sandev.utils.NetWork
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,13 +23,32 @@ import kotlinx.android.synthetic.main.activity_match_detail.*
 class MatchDetailActivity : BaseActivity() {
 
     val network by lazy { NetWork() }
+    val titles : MutableList<String> = mutableListOf()
+    private var data : RecordModule? = null
+    var fragments : MutableList<Fragment> = mutableListOf()
+    private var adapter : MyAdapter? = null
+    private var type :Int? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_match_detail
     }
 
+    init {
+        titles.clear()
+        titles.add("球员数据")
+        titles.add("比赛阵容")
+    }
+
     override fun initData() {
         var index = intent.getIntExtra("index", 0)
+        type = intent.getIntExtra("type",-1)
+        if (type == 0) {
+            tv_detail_type.text = "已结束"
+            tv_detail_type.background = resources.getDrawable(R.drawable.shape_tv_bg)
+        }else{
+            tv_detail_type.text = "未开赛"
+            tv_detail_type.background = resources.getDrawable(R.drawable.shape_matcher_gray)
+        }
         getData(index)
     }
 
@@ -43,6 +61,7 @@ class MatchDetailActivity : BaseActivity() {
                 .subscribe(object : ApiBaseResponse<RecordModule>(this){
                     @SuppressLint("SetTextI18n")
                     override fun onSuccess(t: RecordModule?) {
+                        data = t
                         tv_tags.text = t!!.tags
                         Picasso.with(this@MatchDetailActivity).load(t!!.hostinfo!!.hoet_image).transform(CircleTransform()).into(iv_left_team)
                         Picasso.with(this@MatchDetailActivity).load(t!!.guestinfo!!.guest_image).transform(CircleTransform()).into(iv_right_team)
@@ -50,9 +69,12 @@ class MatchDetailActivity : BaseActivity() {
                         tv_team_name_right.text = t!!.guestinfo!!.guest_name
                         tv_left_count.text = t!!.hostinfo!!.host_count
                         tv_right_count.text = t!!.guestinfo!!.guest_count
-                        tv_host.text = t!!.hostinfo!!.hoet_name+"阵容"
-                        tv_guest.text = t!!.guestinfo!!.guest_name+"阵容"
-                        updateUi(t)
+                        fragments.clear()
+                        fragments.add(TeamDataFragment.getInstance(data))
+                        fragments.add(ZrFragment.getInstance(data))
+                        adapter = MyAdapter()
+                        vp_detail.adapter = adapter
+                        tab_detail.setupWithViewPager(vp_detail)
                     }
 
                     override fun onCodeError(tBaseReponse: BaseResponse<*>) {
@@ -70,51 +92,19 @@ class MatchDetailActivity : BaseActivity() {
         }
     }
 
-    private fun updateUi(recordModule: RecordModule?) {
-        var hostinfoBean = recordModule!!.hostinfo
-        var guestinfoBean = recordModule!!.guestinfo
-        var gridLayoutManager = GridLayoutManager(this, hostinfoBean!!.hostInfo!!.onelist!!.size)
-        var gridLayoutManager1 = GridLayoutManager(this, hostinfoBean!!.hostInfo!!.twolist!!.size)
-        var gridLayoutManager2 = GridLayoutManager(this, hostinfoBean!!.hostInfo!!.threelist!!.size)
-        var gridLayoutManager3 = GridLayoutManager(this, hostinfoBean!!.hostInfo!!.fourlist!!.size)
-        gv_one.layoutManager = gridLayoutManager
-        gv_two.layoutManager = gridLayoutManager1
-        gv_three.layoutManager = gridLayoutManager2
-        gv_four.layoutManager = gridLayoutManager3
+    inner class MyAdapter : FragmentPagerAdapter(this.supportFragmentManager) {
+        override fun getItem(position: Int): Fragment {
+            return fragments!![position]
+        }
 
-        var gridLayoutManager4 = GridLayoutManager(this, guestinfoBean!!.guestInfo!!.onelist!!.size)
-        var gridLayoutManager5 = GridLayoutManager(this, guestinfoBean!!.guestInfo!!.twolist!!.size)
-        var gridLayoutManager6 = GridLayoutManager(this, guestinfoBean!!.guestInfo!!.threelist!!.size)
-        var gridLayoutManager7 = GridLayoutManager(this, guestinfoBean!!.guestInfo!!.fourlist!!.size)
-        gv_guset_one.layoutManager = gridLayoutManager4
-        gv_guset_two.layoutManager = gridLayoutManager5
-        gv_guset_three.layoutManager = gridLayoutManager6
-        gv_guset_four.layoutManager = gridLayoutManager7
+        override fun getCount(): Int {
+            return titles.size
+        }
 
-        var detailAdapter: DetailAdapter = DetailAdapter(this,hostinfoBean!!.hostInfo!!.onelist!!)
-        var detailAdapter1: Detail1Adapter  = Detail1Adapter(this, hostinfoBean!!.hostInfo!!.twolist!!)
-        var detailAdapter2: Detai2Adapter = Detai2Adapter(this, hostinfoBean!!.hostInfo!!.threelist!!)
-        var detailAdapter3: Detai3Adapter = Detai3Adapter(this, hostinfoBean!!.hostInfo!!.fourlist!!)
+        override fun getPageTitle(position: Int): CharSequence? {
+            return titles!![position]
+        }
 
-        var detailAdapter4: DetailGuestAdapter = DetailGuestAdapter(this,guestinfoBean!!.guestInfo!!.onelist!!)
-        var detailAdapter5: DetailGuest1Adapter  = DetailGuest1Adapter(this, guestinfoBean!!.guestInfo!!.twolist!!)
-        var detailAdapter6: DetaiGuest2Adapter = DetaiGuest2Adapter(this, guestinfoBean!!.guestInfo!!.threelist!!)
-        var detailAdapter7: DetaiGiest3Adapter = DetaiGiest3Adapter(this, guestinfoBean!!.guestInfo!!.fourlist!!)
-
-        gv_one.adapter = detailAdapter
-        gv_two.adapter = detailAdapter1
-        gv_three.adapter = detailAdapter2
-        gv_four.adapter = detailAdapter3
-
-        gv_guset_one.adapter = detailAdapter4
-        gv_guset_two.adapter = detailAdapter5
-        gv_guset_three.adapter = detailAdapter6
-        gv_guset_four.adapter = detailAdapter7
-
-        var linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.orientation = RecyclerView.VERTICAL
-        rc_info.layoutManager = linearLayoutManager
-        var itemadapter = InfoItem(this,recordModule!!.playinfo!!)
-        rc_info.adapter = itemadapter
     }
+
 }

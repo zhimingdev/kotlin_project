@@ -46,4 +46,5 @@
         <item name="android:layout_height">1px</item>
         <item name="android:background">#e1e1e1</item>
     </style>
+
 </resources>

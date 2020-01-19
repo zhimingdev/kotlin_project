@@ -12,9 +12,28 @@ android {
         applicationId "com.test.sandev"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 5
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "com.test.sandev",
+                JPUSH_APPKEY : "72de758ef83eae0f1996d545", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs'
+        }
     }
 
     signingConfigs {// 自动化打包配置
@@ -42,8 +61,7 @@ android {
         debug {
             minifyEnabled false
             zipAlignEnabled false
-            signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -60,7 +78,7 @@ greendao {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //解决webview在5.1.1上奔溃问题 1.1.0改成1.0.2
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -83,18 +101,27 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation "com.squareup.okhttp3:logging-interceptor:3.5.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     implementation 'com.blankj:utilcodex:1.26.0'
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
-    implementation "com.squareup.okhttp3:logging-interceptor:3.5.0"
-    implementation "com.github.bumptech.glide:glide:3.8.0"
-    implementation "com.robinhood.ticker:ticker:1.2.2"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'com.robinhood.ticker:ticker:1.2.2'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation project(path: ':nicevideoplayer')
     implementation 'org.greenrobot:greendao:3.2.2'
-    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30"
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.bigkoo:alertview:1.0.3'
     implementation 'com.zhy.base:fileprovider:1.0.0'
     implementation 'top.zibin:Luban:1.1.8'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    implementation files('libs/AMap3DMap_7.1.0_AMapSearch_7.1.0_AMapLocation_4.8.0_20191210.jar')
+    implementation 'cn.jiguang.sdk:jpush:3.3.8'  // 此处以JPush 3.5.4 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.1.6'  // 此处以JCore 2.2.4 版本为例。
+    implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
+    implementation 'q.rorbin:VerticalTabLayout:1.2.5'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+    implementation 'com.haibin:calendarview:3.6.7'
+    implementation 'cn.finalteam.rxgalleryfinal:library:1.0.9'
 }

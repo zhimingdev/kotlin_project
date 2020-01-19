@@ -19,4 +19,6 @@ class MatchModule {
     var guestteam: String? = null
     var guestcount: String? = null
     var vuestname: String? = null
+    var type : Int? = null
+    var time : String? = null
 }

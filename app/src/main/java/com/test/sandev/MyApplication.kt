@@ -2,6 +2,8 @@ package com.test.sandev
 
 import android.app.Application
 import android.database.sqlite.SQLiteDatabase
+import cn.jpush.android.api.JPushInterface
+import cn.jpush.android.api.JPushInterface.*
 
 import com.test.sandev.greendao.DaoMaster
 import com.test.sandev.greendao.DaoSession
@@ -16,6 +18,8 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instances = this
+        init(this)
+        setDebugMode(true)
         initDataBase()
     }
 

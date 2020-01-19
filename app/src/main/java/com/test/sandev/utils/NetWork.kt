@@ -12,6 +12,9 @@ class NetWork {
     companion object {
         var modk_url = "http://mock-api.com/mnEDaYgJ.mock/"
         var wan_url = "https://www.wanandroid.com/"
+
+        var new_mock = "http://mock-api.com/NnQ6E1KY.mock/"
+        var guang = "https://tenant.51yundong.me/"
     }
 
     fun getRetrofit(baseUrl: String): Retrofit {
@@ -52,4 +55,13 @@ class NetWork {
     fun <T> getWanApi(service:Class<T>):T{
         return getRetrofit(wan_url).create(service)
     }
+
+    fun <T> getNewMockApi(service:Class<T>):T{
+        return getRetrofit(new_mock).create(service)
+    }
+
+    fun <T> getGuanApi(service:Class<T>):T{
+        return getRetrofit(guang).create(service)
+    }
+
 }

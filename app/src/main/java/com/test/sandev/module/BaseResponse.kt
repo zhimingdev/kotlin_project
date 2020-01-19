@@ -14,5 +14,6 @@ class BaseResponse<T> {
     var data: T? = null
     var errorCode : Int = 0
     var errorMsg : String? = null
+    var success : String? = null
 
 }

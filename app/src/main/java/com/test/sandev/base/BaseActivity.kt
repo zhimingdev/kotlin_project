@@ -8,9 +8,9 @@ import com.test.sandev.utils.ActivityUtil
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onCreate(savedInstanceState)
         ActivityUtil.addActivity(this)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(getLayoutId())
         initData()
         initLisenter()

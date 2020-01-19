@@ -14,7 +14,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+            abiFilters 'armeabi', 'arm64','armeabi-v7a', 'x86','x86_64'
         }
     }
 
@@ -44,4 +44,7 @@ dependencies {
     implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.3'
     implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.3'
     implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.3'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.3'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.3'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.3'
 }

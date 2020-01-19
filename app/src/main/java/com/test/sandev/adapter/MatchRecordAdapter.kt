@@ -31,6 +31,15 @@ class MatchRecordAdapter(private val context: Context,val data :List<MatchModule
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
         Picasso.with(context).load(data!![position].hostteam).transform(CircleTransform()).into(holder.ivleft)
         Picasso.with(context).load(data!![position].guestteam).transform(CircleTransform()).into(holder.ivright)
+        if (data!![position].type == 0) {
+            holder.ivend.visibility = View.VISIBLE
+            holder.typename.text = "已结束"
+            holder.typename.background = context.resources.getDrawable(R.drawable.shape_tv_bg)
+        }else{
+            holder.ivend.visibility = View.GONE
+            holder.typename.text = "未开赛"
+            holder.typename.background = context.resources.getDrawable(R.drawable.shape_matcher_gray)
+        }
         holder.tags.text = data!![position].tags
         holder.tvleftname.text = data!![position].hostname
         holder.tvrightname.text = data!![position].vuestname
@@ -39,8 +48,10 @@ class MatchRecordAdapter(private val context: Context,val data :List<MatchModule
         holder.cardView.setOnClickListener {
             var intent = Intent(context, MatchDetailActivity::class.java)
             intent.putExtra("index",position+1)
+            intent.putExtra("type",data!![position].type)
             context!!.startActivity(intent)
         }
+        holder.tvtime.text = data!![position].time
     }
 
     class MatchViewHolder(itemview : View) : RecyclerView.ViewHolder(itemview) {
@@ -49,8 +60,11 @@ class MatchRecordAdapter(private val context: Context,val data :List<MatchModule
         var tvrightname = itemview.findViewById<TextView>(R.id.tv_team_name_right)
         var tvleftcoint = itemview.findViewById<TextView>(R.id.tv_left_count)
         var tvrightcount = itemview.findViewById<TextView>(R.id.tv_right_count)
+        var tvtime = itemview.findViewById<TextView>(R.id.tv_matcher_time)
         var ivleft = itemview.findViewById<ImageView>(R.id.iv_left_team)
         var ivright = itemview.findViewById<ImageView>(R.id.iv_right_team)
+        var ivend = itemview.findViewById<ImageView>(R.id.iv_end)
         var cardView = itemView.findViewById<CardView>(R.id.cv)
+        var typename = itemview.findViewById<TextView>(R.id.tv_type_name)
     }
 }

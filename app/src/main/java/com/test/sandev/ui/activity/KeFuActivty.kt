@@ -46,10 +46,10 @@ class KeFuActivty : BaseActivity() {
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
             return try {
                 if (url!!.startsWith("http:") || url.startsWith("https:")) {
-                    val intent = Intent(this@KeFuActivty,WebActivity::class.java)
-                    intent.putExtra("url",url)
-                    startActivity(intent)
-//                    view!!.loadUrl(url)
+//                    val intent = Intent(this@KeFuActivty,WebActivity::class.java)
+//                    intent.putExtra("url",url)
+//                    startActivity(intent)
+                    view!!.loadUrl(url)
                 } else {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     startActivity(intent)

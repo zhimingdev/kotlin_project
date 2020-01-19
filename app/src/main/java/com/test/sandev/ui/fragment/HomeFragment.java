@@ -6,16 +6,22 @@ import android.graphics.Color;
 import android.net.Network;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -39,12 +45,21 @@ import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.test.sandev.R;
 import com.test.sandev.adapter.HomeAdapter;
+import com.test.sandev.adapter.MatchRecordAdapter;
 import com.test.sandev.api.Api;
 import com.test.sandev.base.BaseFragment;
 import com.test.sandev.module.*;
+import com.test.sandev.ui.activity.HotMatcher;
+import com.test.sandev.ui.activity.InfoActivty;
 import com.test.sandev.ui.activity.KeFuActivty;
+import com.test.sandev.ui.activity.LoginActivity;
+import com.test.sandev.ui.activity.MainActivity;
+import com.test.sandev.ui.activity.MatcherDetailActivity;
+import com.test.sandev.ui.activity.NewWeb;
 import com.test.sandev.ui.activity.WebActivity;
+import com.test.sandev.ui.activity.YuCeActivity;
 import com.test.sandev.utils.ApiBaseResponse;
+import com.test.sandev.utils.CircleTransform;
 import com.test.sandev.utils.NetWork;
 import com.test.sandev.utils.UpdateDialog;
 import com.test.sandev.utils.UsualDialogger;
@@ -62,6 +77,8 @@ import com.test.sandev.view.XYMarkerView;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
+
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +87,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class HomeFragment extends BaseFragment implements OnChartValueSelectedListener {
+public class HomeFragment extends BaseFragment {
 
     private MZBannerView bannerView;
     private List<BannerBean> list;
@@ -79,6 +96,14 @@ public class HomeFragment extends BaseFragment implements OnChartValueSelectedLi
     private LinearLayout linearLayout;
     private PieChart pieChart;
     private BarChart barChart;
+    private TextView tv_one;
+    private TextView tv_two;
+    private LinearLayout linearLayout1;
+    private LinearLayout llmore;
+    private LinearLayout infomore,rl_news;
+    private RelativeLayout news;
+    private RecyclerView recyclerView;
+    private CardView cdone,cdtwo,cdthree;
 
     @NotNull
     @Override
@@ -88,6 +113,17 @@ public class HomeFragment extends BaseFragment implements OnChartValueSelectedLi
         linearLayout = (LinearLayout) view.findViewById(R.id.ll_go_kefu);
         pieChart = (PieChart) view.findViewById(R.id.chart1);
         barChart = (BarChart) view.findViewById(R.id.chart);
+        tv_one = (TextView) view.findViewById(R.id.tv_title_one);
+        tv_two = (TextView) view.findViewById(R.id.tv_title_two);
+        linearLayout1 = (LinearLayout) view.findViewById(R.id.ll_hot);
+        llmore = (LinearLayout) view.findViewById(R.id.rl_more);
+        infomore = (LinearLayout) view.findViewById(R.id.ll_info_more);
+        rl_news = (LinearLayout) view.findViewById(R.id.rl_news);
+        news = (RelativeLayout) view.findViewById(R.id.rl_one);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
+        cdone = (CardView) view.findViewById(R.id.cd_one);
+        cdtwo = (CardView) view.findViewById(R.id.cd_two);
+        cdthree = (CardView) view.findViewById(R.id.cd_three);
         return view;
     }
 
@@ -101,175 +137,32 @@ public class HomeFragment extends BaseFragment implements OnChartValueSelectedLi
     protected void initSandevDate() {
         netWork = new NetWork();
         loadData();
-        initChart();
-        initLineraChart();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
-    private void initLineraChart() {
-        barChart.setOnChartValueSelectedListener(this);
-        barChart.setDrawBarShadow(false);
-        barChart.setDrawValueAboveBar(true);
-        barChart.getDescription().setEnabled(false);
-        barChart.setMaxVisibleValueCount(60);
-        barChart.setPinchZoom(false);
-        barChart.setDrawGridBackground(false);
-
-        IAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(barChart);
-        XAxis xAxis = barChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setGranularity(1f); // only intervals of 1 day
-        xAxis.setLabelCount(8,false);
-        xAxis.setValueFormatter(xAxisFormatter);
-
-        IAxisValueFormatter custom = new MyAxisValueFormatter();
-        YAxis leftAxis = barChart.getAxisLeft();
-        //获取到图形右边的Y轴，并设置为不显示
-        barChart.getAxisRight().setEnabled(false);
-        leftAxis.setLabelCount(7, true);
-        leftAxis.setValueFormatter(custom);
-        leftAxis.setAxisMaximum(6);
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-        Legend l = barChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
-        l.setForm(Legend.LegendForm.SQUARE);
-        l.setFormSize(9f);
-        l.setTextSize(11f);
-        l.setXEntrySpace(4f);
-        setBarData();
-        XYMarkerView mv = new XYMarkerView(getContext(), xAxisFormatter);
-        mv.setChartView(barChart); // For bounds control
-        barChart.setMarker(mv);
-    }
-
-    private void setBarData() {
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        yVals1.add(new BarEntry(0,3));
-        yVals1.add(new BarEntry(1,1));
-        yVals1.add(new BarEntry(2,4));
-        yVals1.add(new BarEntry(3,1));
-        yVals1.add(new BarEntry(4,4));
-        yVals1.add(new BarEntry(5,2));
-
-        BarDataSet barDataSet;
-        if (barChart.getData() != null &&
-                barChart.getData().getDataSetCount() > 0) {
-            barDataSet = (BarDataSet) barChart.getData().getDataSetByIndex(0);
-            barDataSet.setValues(yVals1);
-            barChart.getData().notifyDataChanged();
-            barChart.notifyDataSetChanged();
-        } else {
-            barDataSet = new BarDataSet(yVals1, "2019-12");
-            ArrayList<Integer> colors = new ArrayList<Integer>();
-            for (int c : ColorTemplate.VORDIPLOM_COLORS)
-                colors.add(c);
-
-            for (int c : ColorTemplate.JOYFUL_COLORS)
-                colors.add(c);
-
-            for (int c : ColorTemplate.COLORFUL_COLORS)
-                colors.add(c);
-
-            for (int c : ColorTemplate.LIBERTY_COLORS)
-                colors.add(c);
-
-            for (int c : ColorTemplate.PASTEL_COLORS)
-                colors.add(c);
-
-            for (int c : ColorTemplate.MATERIAL_COLORS)
-                colors.add(c);
-
-            colors.add(ColorTemplate.getHoloBlue());
-            barDataSet.setColors(colors);
-            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-            dataSets.add(barDataSet);
-            BarData data = new BarData(dataSets);
-            data.setValueTextSize(10f);
-            data.setBarWidth(0.9f);
-            barChart.setData(data);
-        }
-    }
-
-    private void initChart() {
-        pieChart.setUsePercentValues(true);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
-        pieChart.setCenterText("胜率圆形图");
-        pieChart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.WHITE);
-        pieChart.setTransparentCircleColor(Color.WHITE);
-        pieChart.setTransparentCircleAlpha(110);
-        pieChart.setHoleRadius(58f);
-        pieChart.setTransparentCircleRadius(61f);
-        pieChart.setDrawCenterText(true);
-        pieChart.setRotationAngle(0);
-        pieChart.setRotationEnabled(true);
-        pieChart.setHighlightPerTapEnabled(true);
-        pieChart.setOnChartValueSelectedListener(this);
-        pieChart.animateXY(1400, 1400);
-        setData();
-        Legend l = pieChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setEnabled(false);
-    }
-
-    private void setData() {
-        ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.clear();
-        entries.add(new PieEntry(70.59f,"罗马"));
-        entries.add(new PieEntry(52.49f,"亚特兰大"));
-        entries.add(new PieEntry(52.49f,"国际米兰"));
-        entries.add(new PieEntry(55.56f,"巴塞罗那"));
-        entries.add(new PieEntry(78.95f,"谢菲尔德联"));
-        PieDataSet dataSet = new PieDataSet(entries, "Election Results");
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
-        dataSet.setColors(colors);
-        dataSet.setValueLinePart1OffsetPercentage(80.f);
-        dataSet.setValueLinePart1Length(0.2f);
-        dataSet.setValueLinePart2Length(0.4f);
-        //dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-
-        PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(12f);
-        data.setValueTextColor(Color.BLACK);
-        pieChart.setData(data);
-        pieChart.highlightValues(null);
-        pieChart.invalidate();
-    }
 
     private void loadData() {
+        netWork.getApi(Api.class).getHot()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ApiBaseResponse<List<HotBean>>(getActivity()) {
+                    @Override
+                    public void onFail(@NotNull ApiError e) {
+
+                    }
+
+                    @Override
+                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@Nullable List<HotBean> hotBeans) {
+                        show(hotBeans);
+                    }
+                });
+
         netWork.getApi(Api.class).getBanner()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -290,6 +183,27 @@ public class HomeFragment extends BaseFragment implements OnChartValueSelectedLi
                             }
                         });
                         bannerView.start();
+                    }
+                });
+
+        netWork.getApi(Api.class).getHomeData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ApiBaseResponse<HomeBean>(getActivity()) {
+                    @Override
+                    public void onFail(@NotNull ApiError e) {
+
+                    }
+
+                    @Override
+                    public void onCodeError(@NotNull BaseResponse<?> tBaseReponse) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@Nullable HomeBean homeBean) {
+                        HomeAdapter adapter = new HomeAdapter(getActivity(),homeBean.getDatas());
+                        recyclerView.setAdapter(adapter);
                     }
                 });
 
@@ -317,13 +231,59 @@ public class HomeFragment extends BaseFragment implements OnChartValueSelectedLi
 //                });
     }
 
-    public void showdialog (final String url) {
+    private void show(List<HotBean> hotBeans) {
+        for (int i = 0;i<hotBeans.size();i++){
+            final HotBean hotBean = hotBeans.get(i);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_hot, null);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.rightMargin = 40;
+            params.width = (int) ((Integer)ScreenUtils.getScreenWidth()*0.8);
+            view.setLayoutParams(params);
+            TextView tv_time = (TextView) view.findViewById(R.id.tv_hot_time);
+            TextView tv_type = (TextView) view.findViewById(R.id.tv_hot_type);
+            ImageView iv_host = (ImageView) view.findViewById(R.id.iv_hot_host);
+            TextView tv_host = (TextView) view.findViewById(R.id.tv_hot_host);
+            ImageView iv_guest = (ImageView) view.findViewById(R.id.iv_hot_guest);
+            TextView tv_guest = (TextView) view.findViewById(R.id.tv_hot_guest);
+            final int position = i;
+            ((CardView) view.findViewById(R.id.cd_item)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   Intent intent = new Intent(getContext(), MatcherDetailActivity.class);
+                   intent.putExtra("host",hotBean.getHostteam());
+                   intent.putExtra("hostname",hotBean.getHostname());
+                   intent.putExtra("guest",hotBean.getGuestteam());
+                   intent.putExtra("guestname",hotBean.getGuestname());
+                   intent.putExtra("type",hotBean.getType());
+                   intent.putExtra("time",hotBean.getTypetime());
+                   intent.putExtra("position", position+"");
+                   intent.putExtra("bifen", hotBean.getBifen());
+                   startActivity(intent);
+                }
+            });
+
+            tv_time.setText(hotBean.getTypetime());
+            tv_type.setText(hotBean.getType());
+            Picasso.with(getContext()).load(hotBean.getHostteam())
+                    .transform(new CircleTransform())
+                    .into(iv_host);
+            tv_host.setText(hotBean.getHostname());
+            Picasso.with(getContext()).load(hotBean.getGuestteam())
+                    .transform(new CircleTransform())
+                    .into(iv_guest);
+            tv_guest.setText(hotBean.getGuestname());
+            linearLayout1.addView(view);
+        }
+    }
+
+    public void showdialog(final String url, final String fromwhich) {
         dialogger = UpdateDialog.Builder(getActivity())
                 .setOnCancelClickListener("取消",new UpdateDialog.onCancelClickListener(){
                     @Override
                     public void onClick(View view) {
                         dialogger.dismiss();
                         Intent intent = new Intent(getContext(), WebActivity.class);
+                        intent.putExtra("fromwhicih",fromwhich);
                         intent.putExtra("url",url);
                         startActivity(intent);
                     }
@@ -334,6 +294,7 @@ public class HomeFragment extends BaseFragment implements OnChartValueSelectedLi
                 dialogger.dismiss();
                 Intent intent = new Intent(getContext(),WebActivity.class);
                 intent.putExtra("url",url);
+                intent.putExtra("fromwhicih",fromwhich);
                 startActivity(intent);
             }
         }).build().shown();
@@ -357,16 +318,78 @@ public class HomeFragment extends BaseFragment implements OnChartValueSelectedLi
                 startActivity(intent);
             }
         });
-    }
+        llmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HotMatcher.class);
+                startActivity(intent);
+            }
+        });
 
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
+        infomore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), InfoActivty.class);
+                startActivity(intent);
+            }
+        });
 
-    }
+        news.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra("url","https://live.qq.com/news/20200199315901.html");
+                startActivity(intent);
+            }
+        });
 
-    @Override
-    public void onNothingSelected() {
+        rl_news.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new MessageEvent("news"));
+            }
+        });
 
+        cdone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int loginid = SPUtils.getInstance().getInt("loginid");
+                if (loginid != -1) {
+                    Intent intent = new Intent(getActivity(), YuCeActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+        cdtwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int loginid = SPUtils.getInstance().getInt("loginid");
+                if (loginid != -1) {
+                    Intent intent = new Intent(getActivity(), NewWeb.class);
+                    intent.putExtra("url","http://hbimg.huabanimg.com/9ad42c33b4e1d36a3230d9a93ef93af25fa5ae43bc5d9-Q5xI6Q_fw658");
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+        cdthree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int loginid = SPUtils.getInstance().getInt("loginid");
+                if (loginid != -1) {
+                    Intent intent = new Intent(getActivity(), NoFragment.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     public static class BannerViewHolder implements MZViewHolder<BannerBean> {

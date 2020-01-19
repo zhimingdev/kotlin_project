@@ -1,24 +1,15 @@
 package com.test.sandev.ui.fragment
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
-import android.os.Build
-import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.RelativeLayout
-import androidx.annotation.RequiresApi
 import com.bigkoo.alertview.AlertView
 import com.bigkoo.alertview.OnItemClickListener
 import com.blankj.utilcode.util.*
@@ -40,7 +31,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import top.zibin.luban.Luban
 import top.zibin.luban.OnCompressListener
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
@@ -50,12 +40,12 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import com.test.sandev.lock.LockPatternUtils
 import com.test.sandev.ui.activity.*
-import java.io.IOException
+import kotlinx.android.synthetic.main.fragment_find.*
 
 class YueDanFragment : BaseFragment() {
 
-    private var cacheDialog: com.test.sandev.utils.UsualDialogger? = null
-    private var logoutdialog: com.test.sandev.utils.UsualDialogger? = null
+    private var cacheDialog:UsualDialogger? = null
+    private var logoutdialog: UsualDialogger? = null
     var weburl: String = UrlConstans.kefu_url
     val network by lazy { NetWork() }
     private var mView: AlertView? = null
@@ -67,6 +57,10 @@ class YueDanFragment : BaseFragment() {
 
     private val REQUEST_EXTERNAL_STORAGE = 1
     private val PERMISSIONS_STORAGE = arrayOf("android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE")
+    var pm : String? = null
+    var nc : String? = null
+    var le : String? = null
+    var jf : String? = null
 
     override fun initView(): View {
         EventBus.getDefault().register(this)
@@ -122,7 +116,7 @@ class YueDanFragment : BaseFragment() {
         try {
             //检测是否有写的权限
             var permission = ActivityCompat.checkSelfPermission(activity,
-                    "android.permission.WRITE_EXTERNAL_STORAGE");
+                    "android.permission.WRITE_EXTERNAL_STORAGE")
             if (permission != PackageManager.PERMISSION_GRANTED) {
                 // 没有写的权限，去申请写的权限，会弹出对话框
                 ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
@@ -167,12 +161,14 @@ class YueDanFragment : BaseFragment() {
             } else {
                 iv_head.setImageResource(R.mipmap.ic_head)
             }
+            getJifen()
         } else {
             tv_uaername.text = "立即登录"
             ll_login.isEnabled = true
             tv_logout.visibility = View.GONE
             tv_collect.text = "0"
             tv_starts.text = "0"
+            tv_count.text = "0"
             iv_head.setImageResource(R.mipmap.img_mine)
         }
     }
@@ -185,9 +181,13 @@ class YueDanFragment : BaseFragment() {
         network.getWanApi(Api::class.java).getUserJiFen(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : ApiBaseResponse<JifenModule>(activity!!) {
-                    override fun onSuccess(t: JifenModule?) {
+                .subscribe(object : ApiBaseResponse<MineJifenModule>(activity!!) {
+                    override fun onSuccess(t: MineJifenModule?) {
                         tv_count.text = t!!.coinCount.toString()
+                        pm = t!!.rank.toString()
+                        nc = t!!.username
+                        le = t!!.level.toString()
+                        jf = t!!.coinCount.toString()
                     }
 
                     override fun onCodeError(tBaseReponse: BaseResponse<*>) {
@@ -203,7 +203,7 @@ class YueDanFragment : BaseFragment() {
     override fun initSandevListenter() {
         rl_cache.setOnClickListener {
             cacheDialog =
-                    com.test.sandev.utils.UsualDialogger.Builder(activity)
+                    UsualDialogger.Builder(activity)
                             .setTitle("温馨提示")
                             .setMessage("您确定要清除缓存吗？")
                             .setOnConfirmClickListener("确定", object : com.test.sandev.utils.UsualDialogger.onConfirmClickListener {
@@ -225,7 +225,7 @@ class YueDanFragment : BaseFragment() {
         }
         tv_logout.setOnClickListener {
             logoutdialog =
-                    com.test.sandev.utils.UsualDialogger.Builder(activity)
+                    UsualDialogger.Builder(activity)
                             .setTitle("温馨提示")
                             .setMessage("确定要退出登录吗？")
                             .setOnConfirmClickListener("确定") {
@@ -244,8 +244,18 @@ class YueDanFragment : BaseFragment() {
         }
 
         rl_my_jifen.setOnClickListener {
-            var intent = Intent(activity, SecurpacActivity::class.java)
-            startActivity(intent)
+            var loginid = SPUtils.getInstance().getInt("loginid")
+            if (loginid != -1) {
+                var intent = Intent(context, JiFenActivity::class.java)
+                intent.putExtra("pm",pm)
+                intent.putExtra("nc",nc)
+                intent.putExtra("le",le)
+                intent.putExtra("jf",jf)
+                startActivity(intent)
+            } else {
+                var intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         ll_collect.setOnClickListener {
@@ -293,6 +303,21 @@ class YueDanFragment : BaseFragment() {
         }
         ll_setting_hand.setOnClickListener {
             val intent = Intent(context, UnlockGesturePasswordActivity::class.java)
+            startActivity(intent)
+        }
+        rl_msg.setOnClickListener {
+            var loginid = SPUtils.getInstance().getInt("loginid")
+            if (loginid == 0 || loginid == -1) {
+                var intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            } else {
+                var intent = Intent(context, MsgActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        rl_my_live.setOnClickListener {
+            var intent = Intent(context,LifeRecordActivity::class.java)
             startActivity(intent)
         }
     }

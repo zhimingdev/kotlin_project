@@ -14,5 +14,6 @@
     <color name="weskit_text_color">#333333</color>
     <color name="light_green">#33FF00</color>
     <color name="color_hei_8">#00000000</color>
+    <color name="orange">#FF8C00</color>
 
 </resources>

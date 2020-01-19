@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="115dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:text="NBA"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:id="@+id/tv_lq_time"
+                tools:text="20-1-5"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#7000"
+                tools:text="已结束"
+                android:layout_marginLeft="50dp"
+                android:id="@+id/tv_lq_type"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5">
+
+                <ImageView
+                    android:id="@+id/iv_lq_host"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    tools:src="@mipmap/img_mine"/>
+
+                <TextView
+                    android:id="@+id/tv_lq_host_name"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@android:color/black"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    tools:text="湖人"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+               <TextView
+                   android:layout_marginLeft="10dp"
+                   android:id="@+id/tv_lq_one"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="@android:color/black"
+                   android:textSize="15sp"
+                   tools:text="12"/>
+
+                <TextView
+                    android:id="@+id/tv_lq_two"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    tools:text="12"/>
+
+                <TextView
+                    android:id="@+id/tv_lq_three"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    tools:text="12"/>
+
+                <TextView
+                    android:id="@+id/tv_lq_four"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    tools:text="12"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_host_number"
+                android:layout_gravity="center_vertical"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/red"
+                android:gravity="center"
+                tools:text="105"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5">
+
+                <ImageView
+                    android:id="@+id/iv_lq_guest"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    tools:src="@mipmap/img_mine"/>
+
+                <TextView
+                    android:id="@+id/tv_lq_guest_name"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@android:color/black"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    tools:text="湖人"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/tv_lq_guest_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    tools:text="12"/>
+
+                <TextView
+                    android:id="@+id/tv_lq_guest_two"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    tools:text="12"/>
+
+                <TextView
+                    android:id="@+id/tv_lq_guest_three"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    tools:text="12"/>
+
+                <TextView
+                    android:id="@+id/tv_lq_guest_four"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    tools:text="12"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_guest_number"
+                android:layout_gravity="center_vertical"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/red"
+                android:gravity="center"
+                tools:text="105"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#1000"/>
+
+</RelativeLayout>

@@ -3,11 +3,9 @@ package com.test.sandev.ui.fragment
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ToastUtils
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.test.sandev.R
-import com.test.sandev.adapter.HomeAdapter
-import com.test.sandev.adapter.SqAdapter
+import com.test.sandev.adapter.MatchRecordAdapter
 import com.test.sandev.adapter.VideoAdapter
 import com.test.sandev.adapter.holder.VideoViewHolder
 import com.test.sandev.api.Api
@@ -23,8 +21,7 @@ import kotlinx.android.synthetic.main.fragment_common.*
 class CommonFragment(private var number : Int) : BaseFragment() {
 
     val netWork by lazy { NetWork() }
-    var homeAdapter : HomeAdapter? = null
-    var sqAdapter : SqAdapter? = null
+
     var data : List<VideoModule>? = listOf()
 
     companion object {
@@ -33,40 +30,58 @@ class CommonFragment(private var number : Int) : BaseFragment() {
         }
     }
 
+    init {
+        ClassicsFooter.REFRESH_FOOTER_PULLING = "上拉加载更多"
+        ClassicsFooter.REFRESH_FOOTER_RELEASE = "释放立即加载"
+        ClassicsFooter.REFRESH_FOOTER_REFRESHING = "正在刷新..."
+        ClassicsFooter.REFRESH_FOOTER_LOADING = "正在加载..."
+        ClassicsFooter.REFRESH_FOOTER_FINISH = "加载完成"
+        ClassicsFooter.REFRESH_FOOTER_FAILED = "加载失败"
+        ClassicsFooter.REFRESH_FOOTER_NOTHING = "没有更多数据了"
+    }
+
     override fun initView(): View {
         var view = LayoutInflater.from(context).inflate(R.layout.fragment_common,null)
         return view
     }
 
     override fun initSandevDate() {
+        var linearLayoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = linearLayoutManager
         loadData()
+    }
+
+    override fun initSandevListenter() {
+        srl.setOnRefreshListener {
+            loadData()
+            it.finishRefresh()
+        }
+
+        srl.setOnLoadMoreListener {
+            it.finishLoadMore()
+            it.finishLoadMoreWithNoMoreData()
+        }
     }
 
     private fun loadData() {
         if (number == 0) {
-            val linearLayoutManager = LinearLayoutManager(context)
-            linearLayoutManager.orientation = RecyclerView.VERTICAL
-            recyclerView!!.layoutManager = linearLayoutManager
-            netWork.getApi(Api::class.java).getHomeData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : ApiBaseResponse<HomeBean>(activity!!) {
-                    override fun onSuccess(t: HomeBean?) {
-                        if (homeAdapter == null) {
-                            homeAdapter = HomeAdapter(context,t!!.datas)
+            netWork.getApi(Api::class.java).getMatchRecord()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : ApiBaseResponse<List<MatchModule>>(activity!!) {
+                        override fun onSuccess(t: List<MatchModule>?) {
+                            var adapter : MatchRecordAdapter = MatchRecordAdapter(activity!!,t)
+                            recyclerView.adapter = adapter
                         }
-                        recyclerView.adapter = homeAdapter
-                    }
 
-                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
-                    }
+                        override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+                        }
 
-                    override fun onFail(e: ApiError) {
-                    }
+                        override fun onFail(e: ApiError) {
+                        }
 
-                })
-
-//            netWork.getApi(Api::class.java).getAaData()
+                    })
+            netWork.getApi(Api::class.java).getAaData()
 //                    .subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
 //                    .subscribe(object : ApiBaseResponse<HomeBean>(activity!!) {
@@ -84,27 +99,6 @@ class CommonFragment(private var number : Int) : BaseFragment() {
 //                        }
 //
 //                    })
-        }else if(number == 2){
-            val linearLayoutManager = LinearLayoutManager(context)
-            linearLayoutManager.orientation = RecyclerView.VERTICAL
-            recyclerView!!.layoutManager = linearLayoutManager
-            netWork.getApi(Api::class.java).getSqData()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : ApiBaseResponse<List<SqModule>>(activity!!) {
-                        override fun onSuccess(t: List<SqModule>?) {
-                            if (sqAdapter == null) {
-                                sqAdapter = SqAdapter(context,t!!)
-                            }
-                            recyclerView.adapter = sqAdapter
-                        }
-
-                        override fun onCodeError(tBaseReponse: BaseResponse<*>) {
-                        }
-
-                        override fun onFail(e: ApiError) {
-                        }
-                    })
         }else{
             getDtat()
         }

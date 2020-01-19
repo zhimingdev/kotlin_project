@@ -10,7 +10,8 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
  */
 public class DayAxisValueFormatter implements IAxisValueFormatter {
 
-    private String[] xStrs = new String[]{"曼城", "莱切城", "巴萨", "阿拉维","国米","热那亚"};
+    private String[] xStrs = new String[]{"曼城", "莱切城", "巴萨", "阿拉维","国米","热那亚","意大利"};
+//    private String[] xStrs = new String[]{"西湖区", "萧山区", "滨江区", "江干区","余杭区","拱墅区"};
 
     private BarLineChartBase<?> chart;
     public DayAxisValueFormatter(BarChart barChart) {
