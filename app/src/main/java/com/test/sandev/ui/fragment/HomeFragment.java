@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Network;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,27 +30,9 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.test.sandev.R;
 import com.test.sandev.adapter.HomeAdapter;
-import com.test.sandev.adapter.MatchRecordAdapter;
 import com.test.sandev.api.Api;
 import com.test.sandev.base.BaseFragment;
 import com.test.sandev.module.*;
@@ -53,27 +40,15 @@ import com.test.sandev.ui.activity.HotMatcher;
 import com.test.sandev.ui.activity.InfoActivty;
 import com.test.sandev.ui.activity.KeFuActivty;
 import com.test.sandev.ui.activity.LoginActivity;
-import com.test.sandev.ui.activity.MainActivity;
 import com.test.sandev.ui.activity.MatcherDetailActivity;
 import com.test.sandev.ui.activity.NewWeb;
+import com.test.sandev.ui.activity.SearchActivity;
 import com.test.sandev.ui.activity.WebActivity;
 import com.test.sandev.ui.activity.YuCeActivity;
 import com.test.sandev.utils.ApiBaseResponse;
 import com.test.sandev.utils.CircleTransform;
 import com.test.sandev.utils.NetWork;
 import com.test.sandev.utils.UpdateDialog;
-import com.test.sandev.utils.UsualDialogger;
-import com.test.sandev.adapter.HomeAdapter;
-import com.test.sandev.api.Api;
-import com.test.sandev.base.BaseFragment;
-import com.test.sandev.module.*;
-import com.test.sandev.ui.activity.WebActivity;
-import com.test.sandev.utils.ApiBaseResponse;
-import com.test.sandev.utils.NetWork;
-import com.test.sandev.utils.UpdateDialog;
-import com.test.sandev.view.DayAxisValueFormatter;
-import com.test.sandev.view.MyAxisValueFormatter;
-import com.test.sandev.view.XYMarkerView;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
@@ -104,6 +79,10 @@ public class HomeFragment extends BaseFragment {
     private RelativeLayout news;
     private RecyclerView recyclerView;
     private CardView cdone,cdtwo,cdthree;
+    private RelativeLayout relativeLayout;
+    private ImageView search;
+    private Toolbar toolbar;
+    private NestedScrollView nestedScrollView;
 
     @NotNull
     @Override
@@ -124,6 +103,10 @@ public class HomeFragment extends BaseFragment {
         cdone = (CardView) view.findViewById(R.id.cd_one);
         cdtwo = (CardView) view.findViewById(R.id.cd_two);
         cdthree = (CardView) view.findViewById(R.id.cd_three);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.rl_search);
+        search = (ImageView) view.findViewById(R.id.iv_search);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        nestedScrollView = (NestedScrollView) view.findViewById(R.id.home_ns);
         return view;
     }
 
@@ -300,6 +283,7 @@ public class HomeFragment extends BaseFragment {
         }).build().shown();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initSandevListenter() {
         bannerView.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
@@ -387,6 +371,33 @@ public class HomeFragment extends BaseFragment {
                 } else {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
+                }
+            }
+        });
+
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), search, search.getTransitionName());
+                    startActivity(new Intent(getActivity(), SearchActivity.class), options.toBundle());
+                } else {
+                    startActivity(new Intent(getActivity(), SearchActivity.class));
+                }
+            }
+        });
+
+        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                float height = bannerView.getHeight();  //获取图片的高度
+                if (scrollY < height){
+                    System.out.println("===阻尼 "+scrollY/height);
+                    toolbar.setAlpha(scrollY/height);   // 0~255 透明度
+                }else if (scrollY == 0){
+                    toolbar.setAlpha(0);
+                }else {
+                    toolbar.setAlpha(1);
                 }
             }
         });

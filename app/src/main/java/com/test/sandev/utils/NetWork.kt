@@ -15,6 +15,7 @@ class NetWork {
 
         var new_mock = "http://mock-api.com/NnQ6E1KY.mock/"
         var guang = "https://tenant.51yundong.me/"
+        const val BASE_URL = "http://baobab.kaiyanapp.com/api/"
     }
 
     fun getRetrofit(baseUrl: String): Retrofit {
@@ -62,6 +63,10 @@ class NetWork {
 
     fun <T> getGuanApi(service:Class<T>):T{
         return getRetrofit(guang).create(service)
+    }
+
+    fun <T> getBaseApi(service:Class<T>):T{
+        return getRetrofit(BASE_URL).create(service)
     }
 
 }

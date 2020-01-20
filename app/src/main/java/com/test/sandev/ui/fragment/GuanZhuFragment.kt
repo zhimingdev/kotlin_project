@@ -1,10 +1,14 @@
 package com.test.sandev.ui.fragment
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SPUtils
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -15,6 +19,10 @@ import com.test.sandev.base.BaseFragment
 import com.test.sandev.module.ApiError
 import com.test.sandev.module.BaseResponse
 import com.test.sandev.module.GuanZModule
+import com.test.sandev.module.LanqZhuModule
+import com.test.sandev.ui.activity.JiFenActivity
+import com.test.sandev.ui.activity.LQDetailActivity
+import com.test.sandev.ui.activity.LoginActivity
 import com.test.sandev.utils.ApiBaseResponse
 import com.test.sandev.utils.CircleCrop
 import com.test.sandev.utils.CircleTransform
@@ -25,7 +33,7 @@ import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.fragment_gaunzhu.*
 import kotlinx.android.synthetic.main.item_gz.*
 
-class GuanZhuFragment : BaseFragment(){
+class GuanZhuFragment(private var type :Int) : BaseFragment(){
 
     val network by lazy { NetWork() }
     var data : List<GuanZModule>? = null
@@ -33,9 +41,12 @@ class GuanZhuFragment : BaseFragment(){
     var hisAdapter : HisAdapter? = null
     var adapter : GZAdapter? = null
 
+    var basdata : List<LanqZhuModule>? = null
+    var basadapter : LanZAdpter? = null
+
     companion object{
-        fun getInstance() :GuanZhuFragment{
-            val fragemnt = GuanZhuFragment()
+        fun getInstance( position :Int) :GuanZhuFragment{
+            val fragemnt = GuanZhuFragment(position)
             return fragemnt
         }
     }
@@ -46,30 +57,83 @@ class GuanZhuFragment : BaseFragment(){
     }
 
     override fun initSandevDate() {
-        var linearLayoutManager = LinearLayoutManager(context)
-        rv_gz.layoutManager = linearLayoutManager
-        adapter = GZAdapter()
-        rv_gz.adapter = adapter
         getGuanzhu()
     }
 
     private fun getGuanzhu() {
-        network.getApi(Api::class.java).getZUguanzhu()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : ApiBaseResponse<List<GuanZModule>>(activity!!){
-                    override fun onSuccess(t: List<GuanZModule>?) {
-                        adapter!!.setNewData(t)
-                    }
+        when(type) {
+            0 -> {
+                network.getApi(Api::class.java).getZUguanzhu()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(object : ApiBaseResponse<List<GuanZModule>>(activity!!){
+                            override fun onSuccess(t: List<GuanZModule>?) {
+                                var linearLayoutManager = LinearLayoutManager(context)
+                                rv_gz.layoutManager = linearLayoutManager
+                                adapter = GZAdapter()
+                                rv_gz.adapter = adapter
+                                adapter!!.setNewData(t)
+                                adapter!!.setOnItemClickListener { adapter, view, position ->
+                                    val intent = Intent(context, LQDetailActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            }
 
-                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
-                    }
+                            override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+                            }
 
-                    override fun onFail(e: ApiError) {
-                    }
+                            override fun onFail(e: ApiError) {
+                            }
 
-                })
+                        })
+            }
+            1 -> {
+                network.getApi(Api::class.java).getLQzhuajia()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(object : ApiBaseResponse<List<LanqZhuModule>>(activity!!){
+                            override fun onSuccess(t: List<LanqZhuModule>?) {
+                                var gridLayoutManager = GridLayoutManager(context,2)
+                                rv_gz.layoutManager = gridLayoutManager
+                                basadapter = LanZAdpter()
+                                rv_gz.adapter = basadapter
+                                basadapter!!.setNewData(t)
+                                basadapter!!.setOnItemClickListener { adapter, view, position ->
+                                    val intent = Intent(context, LQDetailActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            }
 
+                            override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+                            }
+
+                            override fun onFail(e: ApiError) {
+                            }
+
+                        })
+            }
+        }
+    }
+
+    inner class LanZAdpter : BaseQuickAdapter<LanqZhuModule,BaseViewHolder>(R.layout.item_ba_gaunhzu,basdata) {
+        override fun convert(helper: BaseViewHolder?, item: LanqZhuModule?) {
+            Picasso.with(context).load(item!!.zjurl).transform(CircleTransform()).into(helper!!.getView(R.id.iv_bas) as ImageView)
+            helper.setText(R.id.tv_bas_name,item.zjname)
+            helper.setText(R.id.tv_bas_tags,item.biaoshi)
+            helper.setText(R.id.tv_bas_mz,item.mingzhong)
+            helper.setText(R.id.tv_tab_one,item.tablist!![0].history)
+            helper.setText(R.id.tv_tab_two,item.tablist!![1].history)
+            helper.getView<TextView>(R.id.tv_gz_zhujia).setOnClickListener {
+                var loginid = SPUtils.getInstance().getInt("loginid")
+                if (loginid != -1) {
+                    helper.getView<TextView>(R.id.tv_gz_zhujia).text = "已关注"
+                    helper.getView<TextView>(R.id.tv_gz_zhujia).setBackgroundResource(R.drawable.shape_matcher_gray)
+                } else {
+                    var intent = Intent(context, LoginActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
     inner class GZAdapter : BaseQuickAdapter<GuanZModule,BaseViewHolder>(R.layout.item_gz,data) {

@@ -34,7 +34,7 @@ class LQFragment : BaseFragment() {
     override fun initSandevDate() {
         fragments.clear()
         fragments.add(LanqiuFragment.getInstance())
-        fragments.add(AliveFragment.getInstance())
+        fragments.add(GuanZhuFragment.getInstance(1))
         adapter = LanqAdapter()
         vp_lq.adapter = adapter
         tab_lq.setupWithViewPager(vp_lq)

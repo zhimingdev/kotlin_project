@@ -1,5 +1,4 @@
 package com.test.sandev.api
-
 import com.test.sandev.module.*
 import io.reactivex.Observable
 import retrofit2.Call
@@ -113,5 +112,29 @@ interface Api {
 
     @GET("v2/footbar/data")
     fun getZUguanzhu() : Observable<BaseResponse<List<GuanZModule>>>
+
+    @GET("v2/bashet/people")
+    fun getLQzhuajia() : Observable<BaseResponse<List<LanqZhuModule>>>
+
+    @GET("v2/people/detail")
+    fun getDetailpeople() : Observable<BaseResponse<List<DetailModule>>>
+
+    /**
+     * 热门搜索词
+     */
+    @GET("v3/queries/hot")
+    fun getHotWord():Observable<ArrayList<String>>
+
+    /**
+     * 获取搜索信息
+     */
+    @GET("v1/search?&num=10&start=10")
+    fun getSearchData(@Query("query") query :String) : Observable<HomeNewBean.Issue>
+
+    /**
+     * 获取更多的 Issue
+     */
+    @GET
+    fun getIssueData(@Url url: String): Observable<HomeNewBean.Issue>
 
 }

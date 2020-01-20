@@ -124,4 +124,7 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
     implementation 'com.haibin:calendarview:3.6.7'
     implementation 'cn.finalteam.rxgalleryfinal:library:1.0.9'
+    implementation project(path: ':multiple-status-view')
+    //Google开源的一个布局控件
+    implementation 'com.google.android:flexbox:0.3.1'
 }

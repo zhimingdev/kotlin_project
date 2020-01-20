@@ -11,4 +11,5 @@ class MineJifenModule {
     var collect : String? = null
     //赞
     var starts : String? = null
+
 }

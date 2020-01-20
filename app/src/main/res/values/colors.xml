@@ -15,5 +15,11 @@
     <color name="light_green">#33FF00</color>
     <color name="color_hei_8">#00000000</color>
     <color name="orange">#FF8C00</color>
+    <color name="color_translucent">#00000000</color>
+    <!-- 默认背景色 -->
+    <color name="backgroundColor">#EEEEEE</color>
+    <color name="color_lighter_gray">#ddd</color>
+    <color name="color_darker_gray">#aaa</color>
+    <color name="color_gray">#9a9a9a</color>
 
 </resources>

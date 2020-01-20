@@ -179,6 +179,12 @@
         <activity
             android:name=".ui.activity.YuCeActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.LQDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"

@@ -29,7 +29,7 @@ class ZQFragment : BaseFragment() {
         fragments!!.clear()
         fragments!!.add(CommonFragment.getInstanca(0))
         fragments!!.add(CommonFragment.getInstanca(1))
-        fragments!!.add(GuanZhuFragment.getInstance())
+        fragments!!.add(GuanZhuFragment.getInstance(0))
     }
 
     override fun initView(): View {

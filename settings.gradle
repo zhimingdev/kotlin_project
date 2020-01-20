@@ -1,1 +1,1 @@
-include ':app', ':nicevideoplayer'
+include ':app', ':nicevideoplayer', ':multiple-status-view'

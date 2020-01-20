@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/home_ns"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -25,7 +26,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
                     <com.zhouwei.mzbanner.MZBannerView
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
@@ -372,8 +372,55 @@
                         android:src="@mipmap/pop_default" />
 
                 </LinearLayout>
+
             </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetStart="0dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:cardCornerRadius="20dp"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:layout_gravity="center_vertical"
+                android:id="@+id/rl_search"
+                android:padding="5dp"
+                android:paddingLeft="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
+                    android:transitionName="@string/search_transition_name"
+                    android:src="@mipmap/ic_action_search_black"
+                    tools:targetApi="lollipop" />
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_search"
+                    android:textSize="13sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="搜索..."/>
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.appcompat.widget.Toolbar>
 
 </RelativeLayout>
