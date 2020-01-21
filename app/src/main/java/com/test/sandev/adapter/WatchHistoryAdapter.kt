@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import com.test.sandev.R
 import com.test.sandev.constans.UrlConstans
 import com.test.sandev.module.HomeNewBean
@@ -17,46 +19,32 @@ import com.test.sandev.utils.recyclerview.ViewHolder
 import com.test.sandev.utils.recyclerview.adapter.CommonAdapter
 
 /**
- * Created by xuhao on 2017/11/30.
- * desc:分类详情Adapter
+ * Created by xuhao on 2017/12/11.
+ * desc:
  */
-class CategoryDetailAdapter(context: Context, dataList: ArrayList<HomeNewBean.Issue.Item>, layoutId: Int)
+class WatchHistoryAdapter(private var context: Context, dataList: ArrayList<HomeNewBean.Issue.Item>, layoutId: Int)
     : CommonAdapter<HomeNewBean.Issue.Item>(context, dataList, layoutId) {
 
 
-    fun addData(dataList: ArrayList<HomeNewBean.Issue.Item>) {
-        this.mData.addAll(dataList)
-        notifyDataSetChanged()
-    }
-
-
+    //绑定数据
     override fun bindData(holder: ViewHolder, data: HomeNewBean.Issue.Item, position: Int) {
-        setVideoItem(holder, data)
-    }
-
-    /**
-     * 加载 content item
-     */
-    private fun setVideoItem(holder: ViewHolder, item: HomeNewBean.Issue.Item) {
-        val itemData = item.data
-        val cover = itemData?.cover?.feed?:""
-        // 加载封页图
-        Picasso.with(mContext)
-                .load(cover)
-                .into(holder.getView(R.id.iv_image) as ImageView)
-        holder.setText(R.id.tv_title, itemData?.title?:"")
-
-        // 格式化时间
-        val timeFormat = durationFormat(itemData?.duration)
-
-        holder.setText(R.id.tv_tag, "#${itemData?.category}/$timeFormat")
-
+        with(holder) {
+            setText(R.id.tv_title, data.data?.title!!)
+            setText(R.id.tv_tag, "#${data.data.category} / ${durationFormat(data.data.duration)}")
+            setImagePath(R.id.iv_video_small_card, object : ViewHolder.HolderImageLoader(data.data.cover.detail) {
+                override fun loadImage(iv: ImageView, path: String) {
+                    Glide.with(mContext)
+                            .load(path)
+                            .into(iv)
+                }
+            })
+        }
+        holder.getView<TextView>(R.id.tv_title).setTextColor(ContextCompat.getColor(context,android.R.color.black))
         holder.setOnItemClickListener(listener = View.OnClickListener {
-            goToVideoPlayer(mContext as Activity, holder.getView(R.id.iv_image), item)
+            goToVideoPlayer(context as Activity, holder.getView(R.id.iv_video_small_card), data)
         })
-
-
     }
+
 
     /**
      * 跳转到视频详情页面播放
@@ -67,7 +55,7 @@ class CategoryDetailAdapter(context: Context, dataList: ArrayList<HomeNewBean.Is
     private fun goToVideoPlayer(activity: Activity, view: View, itemData: HomeNewBean.Issue.Item) {
         val intent = Intent(activity, VideoDetailActivity::class.java)
         intent.putExtra(UrlConstans.BUNDLE_VIDEO_DATA, itemData)
-        intent.putExtra(VideoDetailActivity.Companion.TRANSITION, true)
+        intent.putExtra(VideoDetailActivity.TRANSITION, true)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             val pair = Pair<View, String>(view, VideoDetailActivity.IMG_TRANSITION)
             val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(

@@ -53,7 +53,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             zipAlignEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -108,7 +108,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.8.0'
     implementation 'com.robinhood.ticker:ticker:1.2.2'
     implementation 'org.greenrobot:eventbus:3.1.1'
-    implementation project(path: ':nicevideoplayer')
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.bigkoo:alertview:1.0.3'
@@ -116,15 +115,21 @@ dependencies {
     implementation 'top.zibin:Luban:1.1.8'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     implementation files('libs/AMap3DMap_7.1.0_AMapSearch_7.1.0_AMapLocation_4.8.0_20191210.jar')
-    implementation 'cn.jiguang.sdk:jpush:3.3.8'  // 此处以JPush 3.5.4 版本为例。
-    implementation 'cn.jiguang.sdk:jcore:2.1.6'  // 此处以JCore 2.2.4 版本为例。
+    implementation 'cn.jiguang.sdk:jpush:3.3.8'
+    // 此处以JPush 3.5.4 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.1.6'
+    // 此处以JCore 2.2.4 版本为例。
     implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+    //没有使用特殊Header，可以不加这行
     implementation 'com.haibin:calendarview:3.6.7'
     implementation 'cn.finalteam.rxgalleryfinal:library:1.0.9'
     implementation project(path: ':multiple-status-view')
     //Google开源的一个布局控件
     implementation 'com.google.android:flexbox:0.3.1'
+    // 视屏播放器
+    implementation 'com.shuyu:GSYVideoPlayer:2.1.1'
+    implementation files('libs/volley.jar')
 }

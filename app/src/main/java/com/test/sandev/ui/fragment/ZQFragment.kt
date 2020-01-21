@@ -24,11 +24,25 @@ class ZQFragment : BaseFragment() {
 
     init {
         items.add("赛程")
-        items.add("集锦")
+        items.add("精选")
+        items.add("专题")
+        items.add("转会")
+        items.add("英超")
+        items.add("西甲")
+        items.add("德甲")
+        items.add("欧冠")
+        items.add("意甲")
         items.add("专家")
         fragments!!.clear()
         fragments!!.add(CommonFragment.getInstanca(0))
         fragments!!.add(CommonFragment.getInstanca(1))
+        fragments!!.add(CommonListViewFragment.getInstanca(7))
+        fragments!!.add(CommonListViewFragment.getInstanca(8))
+        fragments!!.add(CommonFragment.getInstanca(2))
+        fragments!!.add(CommonFragment.getInstanca(3))
+        fragments!!.add(CommonFragment.getInstanca(4))
+        fragments!!.add(CommonFragment.getInstanca(5))
+        fragments!!.add(CommonFragment.getInstanca(6))
         fragments!!.add(GuanZhuFragment.getInstance(0))
     }
 

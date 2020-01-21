@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso
 import com.test.sandev.R
 import com.test.sandev.api.Api
 import com.test.sandev.base.BaseFragment
+import com.test.sandev.constans.UrlConstans
 import com.test.sandev.module.ApiError
 import com.test.sandev.module.BaseResponse
 import com.test.sandev.module.GuanZModule
@@ -23,15 +24,15 @@ import com.test.sandev.module.LanqZhuModule
 import com.test.sandev.ui.activity.JiFenActivity
 import com.test.sandev.ui.activity.LQDetailActivity
 import com.test.sandev.ui.activity.LoginActivity
-import com.test.sandev.utils.ApiBaseResponse
-import com.test.sandev.utils.CircleCrop
-import com.test.sandev.utils.CircleTransform
-import com.test.sandev.utils.NetWork
+import com.test.sandev.ui.activity.WatchHistoryActivity
+import com.test.sandev.utils.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.fragment_gaunzhu.*
 import kotlinx.android.synthetic.main.item_gz.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GuanZhuFragment(private var type :Int) : BaseFragment(){
 
@@ -43,6 +44,7 @@ class GuanZhuFragment(private var type :Int) : BaseFragment(){
 
     var basdata : List<LanqZhuModule>? = null
     var basadapter : LanZAdpter? = null
+    private val mFormat by lazy { SimpleDateFormat("yyyyMMddHHmmss"); }
 
     companion object{
         fun getInstance( position :Int) :GuanZhuFragment{
@@ -127,6 +129,13 @@ class GuanZhuFragment(private var type :Int) : BaseFragment(){
                 var loginid = SPUtils.getInstance().getInt("loginid")
                 if (loginid != -1) {
                     helper.getView<TextView>(R.id.tv_gz_zhujia).text = "已关注"
+                    val historyMap = WatchHistoryUtils.getAll(UrlConstans.FILE_PEOPLE,mContext) as Map<*, *>
+                    for ((key, _) in historyMap) {
+                        if (item == WatchHistoryUtils.getObject(UrlConstans.FILE_PEOPLE,mContext, key as String)) {
+                            WatchHistoryUtils.remove(UrlConstans.FILE_PEOPLE,mContext, key)
+                        }
+                    }
+                    WatchHistoryUtils.putObject(UrlConstans.FILE_PEOPLE,mContext, item,"guanzhu" + mFormat.format(Date()))
                     helper.getView<TextView>(R.id.tv_gz_zhujia).setBackgroundResource(R.drawable.shape_matcher_gray)
                 } else {
                     var intent = Intent(context, LoginActivity::class.java)

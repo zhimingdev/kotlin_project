@@ -23,7 +23,10 @@ class LQFragment : BaseFragment() {
     init {
         titles.clear()
         titles.add("赛事")
-        titles.add("关注")
+        titles.add("篮球精选")
+        titles.add("NBA")
+        titles.add("赛事")
+        titles.add("专家")
     }
 
     override fun initView(): View {
@@ -34,6 +37,9 @@ class LQFragment : BaseFragment() {
     override fun initSandevDate() {
         fragments.clear()
         fragments.add(LanqiuFragment.getInstance())
+        fragments.add(CommonFragment.getInstanca(9))
+        fragments.add(CommonFragment.getInstanca(10))
+        fragments.add(CommonFragment.getInstanca(11))
         fragments.add(GuanZhuFragment.getInstance(1))
         adapter = LanqAdapter()
         vp_lq.adapter = adapter

@@ -185,6 +185,16 @@
         <activity
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.VideoDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.WatchHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ZhuJiaActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"

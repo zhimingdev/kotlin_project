@@ -216,6 +216,60 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_video_his"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_video_his"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/ic_video_history" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/iv_video_his"
+                android:text="观看记录"
+                android:textColor="@android:color/black"
+                android:textSize="16dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_zhuajia"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_zhuanjia"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/ic_guanzhu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/iv_zhuanjia"
+                android:text="我的专家"
+                android:textColor="@android:color/black"
+                android:textSize="16dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rl_my_live"
             android:layout_width="match_parent"
             android:layout_height="50dp"

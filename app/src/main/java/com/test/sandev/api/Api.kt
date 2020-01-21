@@ -137,4 +137,10 @@ interface Api {
     @GET
     fun getIssueData(@Url url: String): Observable<HomeNewBean.Issue>
 
+    /**
+     * 根据item id获取相关视频
+     */
+    @GET("v4/video/related?")
+    fun getRelatedData(@Query("id") id: Long): Observable<HomeNewBean.Issue>
+
 }

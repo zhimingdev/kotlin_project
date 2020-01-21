@@ -3,29 +3,37 @@ package com.test.sandev.ui.fragment
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.test.sandev.R
+import com.test.sandev.adapter.CategoryDetailAdapter
+import com.test.sandev.adapter.LeagueAdapter
 import com.test.sandev.adapter.MatchRecordAdapter
-import com.test.sandev.adapter.VideoAdapter
-import com.test.sandev.adapter.holder.VideoViewHolder
 import com.test.sandev.api.Api
 import com.test.sandev.base.BaseFragment
+import com.test.sandev.constans.UrlConstans
 import com.test.sandev.module.*
 import com.test.sandev.utils.ApiBaseResponse
 import com.test.sandev.utils.NetWork
-import com.xiao.nicevideoplayer.NiceVideoPlayerManager
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_common.*
 
-class CommonFragment(private var number : Int) : BaseFragment() {
+class CommonFragment(private var number: Int) : BaseFragment(){
 
     val netWork by lazy { NetWork() }
-
-    var data : List<VideoModule>? = listOf()
+    private var nextPageUrl: String? = null
+    private var itemList = ArrayList<HomeNewBean.Issue.Item>()
+    private val mResultAdapter by lazy { CategoryDetailAdapter(activity!!, itemList, R.layout.item_category_detail) }
 
     companion object {
-        fun getInstanca(type : Int) : CommonFragment {
+        fun getInstanca(type: Int): CommonFragment {
             return CommonFragment(type)
         }
     }
@@ -41,7 +49,7 @@ class CommonFragment(private var number : Int) : BaseFragment() {
     }
 
     override fun initView(): View {
-        var view = LayoutInflater.from(context).inflate(R.layout.fragment_common,null)
+        var view = LayoutInflater.from(context).inflate(R.layout.fragment_common, null)
         return view
     }
 
@@ -58,8 +66,8 @@ class CommonFragment(private var number : Int) : BaseFragment() {
         }
 
         srl.setOnLoadMoreListener {
+            loadMoreData()
             it.finishLoadMore()
-            it.finishLoadMoreWithNoMoreData()
         }
     }
 
@@ -70,7 +78,7 @@ class CommonFragment(private var number : Int) : BaseFragment() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : ApiBaseResponse<List<MatchModule>>(activity!!) {
                         override fun onSuccess(t: List<MatchModule>?) {
-                            var adapter : MatchRecordAdapter = MatchRecordAdapter(activity!!,t)
+                            var adapter: MatchRecordAdapter = MatchRecordAdapter(activity!!, t)
                             recyclerView.adapter = adapter
                         }
 
@@ -99,66 +107,76 @@ class CommonFragment(private var number : Int) : BaseFragment() {
 //                        }
 //
 //                    })
-        }else{
-            getDtat()
+        } else if (number == 1) {
+            getDtat("精选")
+        } else if (number == 2) {
+            getDtat("足球")
+        } else if (number == 3) {
+            getDtat("足球赛")
+        } else if (number == 4) {
+            getDtat("足球视频")
+        } else if (number == 5) {
+            getDtat("足球被")
+        } else if (number == 6) {
+            getDtat("足球技巧")
+        } else if (number == 9) {
+            getDtat("篮球精选")
+        } else if (number == 10) {
+            getDtat("NBA")
+        } else if (number == 11) {
+            getDtat("篮球视频")
         }
+
     }
 
-    private fun getDtat() {
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.setRecyclerListener {
-            val niceVideoPlayer = (it as VideoViewHolder).mVideoPlayer
-            if (niceVideoPlayer === NiceVideoPlayerManager.instance().currentNiceVideoPlayer) {
-                NiceVideoPlayerManager.instance().releaseNiceVideoPlayer()
-            }
-        }
-        netWork.getApi(Api::class.java).getVideoData()
+    private fun getDtat(s: String) {
+        netWork.getBaseApi(Api::class.java).getSearchData(s)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object :ApiBaseResponse<List<VideoModule>>(activity!!) {
-                    override fun onSuccess(t: List<VideoModule>?) {
-                        data = t
-                        val adapter = VideoAdapter(context!!, data)
-                        recyclerView.adapter = adapter
+                .subscribe(object : Observer<HomeNewBean.Issue> {
+                    override fun onComplete() {
                     }
 
-                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
+                    override fun onSubscribe(d: Disposable) {
                     }
 
-                    override fun onFail(e: ApiError) {
+                    override fun onNext(issue: HomeNewBean.Issue) {
+                        recyclerView.adapter = mResultAdapter
+                        if (issue.count > 0 && issue.itemList.size > 0) {
+                            nextPageUrl = issue.nextPageUrl
+                            setSearchResult(issue)
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                    }
+                })
+    }
+
+    private fun setSearchResult(issue: HomeNewBean.Issue) {
+        itemList = issue.itemList
+        mResultAdapter.addData(issue.itemList)
+    }
+
+    private fun loadMoreData() {
+        netWork.getBaseApi(Api::class.java).getIssueData(nextPageUrl!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<HomeNewBean.Issue> {
+                    override fun onComplete() {
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onNext(issue: HomeNewBean.Issue) {
+                        nextPageUrl = issue.nextPageUrl
+                        setSearchResult(issue)
+                    }
+
+                    override fun onError(e: Throwable) {
                     }
 
                 })
-//        netWork.getApi(Api::class.java).getAvInfo()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object :ApiBaseResponse<List<VideoModule>>(activity!!) {
-//                    override fun onSuccess(t: List<VideoModule>?) {
-//                        data = t
-//                        val adapter = VideoAdapter(context!!, data)
-//                        recyclerView.adapter = adapter
-//                    }
-//
-//                    override fun onCodeError(tBaseReponse: BaseResponse<*>) {
-//                    }
-//
-//                    override fun onFail(e: ApiError) {
-//                    }
-//
-//                })
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer()
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (hidden) {
-            NiceVideoPlayerManager.instance().releaseNiceVideoPlayer()
-        }
     }
 }

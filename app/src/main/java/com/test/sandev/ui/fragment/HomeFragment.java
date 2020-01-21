@@ -392,7 +392,6 @@ public class HomeFragment extends BaseFragment {
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 float height = bannerView.getHeight();  //获取图片的高度
                 if (scrollY < height){
-                    System.out.println("===阻尼 "+scrollY/height);
                     toolbar.setAlpha(scrollY/height);   // 0~255 透明度
                 }else if (scrollY == 0){
                     toolbar.setAlpha(0);

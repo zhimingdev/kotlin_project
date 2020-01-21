@@ -38,9 +38,9 @@ import java.util.*
 import android.util.Base64
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
+import com.blankj.utilcode.util.Utils
 import com.test.sandev.lock.LockPatternUtils
 import com.test.sandev.ui.activity.*
-import kotlinx.android.synthetic.main.fragment_find.*
 
 class YueDanFragment : BaseFragment() {
 
@@ -319,6 +319,21 @@ class YueDanFragment : BaseFragment() {
         rl_my_live.setOnClickListener {
             var intent = Intent(context,LifeRecordActivity::class.java)
             startActivity(intent)
+        }
+
+        rl_video_his.setOnClickListener {
+            var intent = Intent(context,WatchHistoryActivity::class.java)
+            startActivity(intent)
+        }
+        rl_zhuajia.setOnClickListener {
+            var loginid = SPUtils.getInstance().getInt("loginid")
+            if (loginid == 0 || loginid == -1) {
+                var intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            } else {
+                var intent = Intent(context, ZhuJiaActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

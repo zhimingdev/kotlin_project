@@ -25,7 +25,6 @@ import com.test.sandev.module.*
 import com.test.sandev.ui.fragment.*
 import com.test.sandev.utils.ApiBaseResponse
 import com.test.sandev.utils.NetWork
-import com.xiao.nicevideoplayer.NiceVideoPlayerManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
